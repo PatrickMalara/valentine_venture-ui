@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+    <link rel="stylesheet" href="styles/root.css" />
+    <link rel="stylesheet" href="styles/search.css" />
+
+    <title> Valentine Venture </title>
+  </head>
+  <body>
+
+      <main>
+
+          <form onsubmit="search(event)" action="" class="search-bar">
+              <input type="text" />
+              <button type="submit"> Search </button>
+          </form>
+
+          <div id="map" style="width: 100%; height: 100vh;" class=""> </div>
+
+      </main>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+    <script src="javascript/feathers.js"></script>
+    <script src="javascript/socket.io.js"></script>
+    <script>
+
+        //Globals
+        const socket    = io("http://localhost:3030");
+        const app       = feathers();
+
+        app.configure( feathers.socketio(socket) );
+
+
+        const the_map = L.map("map").setView([43.2557, -79.8711], 13);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoicGF0cmlja21hbGFyYWRldmVsb3BlciIsImEiOiJja3RhdG9sNWoxcHhsMnBucmN2dDBsajh2In0.SyHhgEOXvWgrBEYCEc3uAA',
+        }).addTo( the_map );
+
+
+        async function search( event ) {
+            event.preventDefault(); 
+
+            console.debug( "Doing Search" );
+
+            try {
+
+                let response = await app.service("locations").find();
+                console.log( response );
+
+            } catch(error) {
+                console.error( error ); 
+            }
+
+        }
+
+    
+        (function main() {
+
+
+        
+        } )();
+
+
+    </script>
+
+  </body>
+</html>
