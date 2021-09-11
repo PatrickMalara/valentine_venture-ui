@@ -1,0 +1,20 @@
+.preferences {
+    position: absolute;
+    top: 3rem;
+    z-index: 2000;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.preference {
+    display: none;
+}
+
+.pref-applied {
+    display: inline !important;
+    background-color: indianred;
+    color: white;
+
+    margin-left: 0.5rem;
+}
