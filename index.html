@@ -108,6 +108,45 @@
           </article>
       </div>
 
+      <div id="user-menu" class="modal" style="display: none; filter: opacity(0%);"> 
+          <article class="modal-content" style="height: auto;">
+              <div class="modal-header">
+                  <h3> <i class="bi-heart-fill"></i> User Menu </h3>
+                <i onclick="modals.close('user-menu') " class="bi bi-x" style="cursor: pointer;"> </i>
+              </div>
+
+              <button onclick=" modals.open('suggest-location') "> 
+                  <i class="bi bi-lightbulb "></i> Suggest a Location 
+              </button>
+              
+          </article>
+      </div>
+
+      <div id="suggest-location" class="modal" style="display: none; filter: opacity(0%);"> 
+          <article class="modal-content" style="height: auto;">
+              <div class="modal-header">
+                  <h3> <i class="bi-lightbulb" ></i> Suggest a Location </h3>
+                <i onclick="modals.close('suggest-location) " class="bi bi-x" style="cursor: pointer;"> </i>
+              </div>
+
+              <form onsubmit="suggest_date(event)" > 
+                    <label> Location Name </label> <br />
+                    <input type="text" id="location-name" name="name"> <br /> <br />
+
+                    <label> Description *</label> <br />
+                    <input type="text" id="description" name="description"> <br /> <br />
+    
+                    <label> Address </label> <br />
+                    <input type="text" id="address" name="address"> <br /> <br />
+
+                    <div id="suggestion-map" style=" width: 100%; height: 280px; "> </div> <br />
+
+                    <button type="submit"> Suggest </button>
+              </form>
+              
+          </article>
+      </div>
+
       <div id="login-signup" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
@@ -115,12 +154,23 @@
                 <i onclick="modals.close('login-signup') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <h4> Signup </h4>
-              <form onsubmit="attempt_signup()">
+              <h4> Login </h4>
+              <form onsubmit="attempt_login(event)">
                   <label>Email</label> <br />
-                  <input type="text" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
+                  <input type="email name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
                   <label>Password</label> <br />
                   <input type="password" name="password" /> <br /> <br />
+                  <button type="submit"> Login </button>
+              </form>
+
+              <hr />
+
+              <h4> Signup </h4>
+              <form onsubmit="attempt_signup(event)">
+                  <label>Email</label> <br />
+                  <input type="email id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
+                  <label>Password</label> <br />
+                  <input type="password" id="password" name="password" /> <br /> <br />
                   <button type="submit"> Create Account </button>
               </form>
               

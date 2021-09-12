@@ -1,8 +1,15 @@
 //Globals
 const socket    = io("http://localhost:3030");
-const app       = feathers();
+const client    = feathers();
 
-app.configure( feathers.socketio(socket) );
+client.configure( feathers.socketio(socket) );
+
+// Use localStorage to store our login token
+client.configure(feathers.authentication({
+  storage: window.localStorage
+}));
+
+
 
 const the_map = L.map("map").setView([43.2557, -79.8711], 13);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -36,6 +43,7 @@ var userMarker = L.icon({
 
 
 const state = {
+    user:               undefined,
     user_pos:           undefined,
     locations_array:    [],
     selected_location:  undefined,
@@ -68,7 +76,7 @@ function toggle_preference( pref_name ) {
 async function load_location_modal_contents( lat, lng ) {
     
     try {
-        let response = await app.service("locations").find( { 
+        let response = await client.service("locations").find( { 
             query: {
                 latitude: lat,
                 longitude: lng
@@ -103,13 +111,58 @@ async function load_location_modal_contents( lat, lng ) {
 }
 
 
+async function attempt_login(event) { 
+    event.preventDefault();
+    event.cancelBubble = true;
+    event.stopPropagation();
+
+    const email     = event.target["email"].value.trim();
+    const password  = event.target["password"].value.trim();
+
+    if ( email === "" || password === "" ) {
+        console.log(" Neither email or password may be empty ");
+        return;
+    }
+
+    let response = await client.authenticate( {
+        strategy: "local",
+        email: email,
+        password: password
+    } );
+
+    state.user = {
+        email: email,
+        is_admin: false
+    }
+
+    console.debug( response );
+}
+
+
 // Invoked by a form's onsubmit Event
 async function attempt_signup(event) {
     event.preventDefault();
     event.cancelBubble = true;
     event.stopPropagation();
 
-    console.debug( "Signup Event", event );
+    const email     = event.target["email"].value.trim();
+    const password  = event.target["password"].value.trim();
+
+    if ( email === "" || password === "" ) {
+        console.log(" Neither email or password may be empty ");
+        return;
+    }
+
+
+    try {
+        let response = await client.service('users').create( {
+            email:      email,
+            password:   password
+        } );
+
+    } catch(erorr) {
+        console.log("Error Creating a new User: ", error );
+    }
 }
 
 function open_login_signup_modal(event) {
@@ -117,9 +170,14 @@ function open_login_signup_modal(event) {
     event.cancelBubble = true;
     event.stopPropagation();
 
+    if ( state.user === undefined ) {
+        modals.open('login-signup'); 
+    } else {
+        modals.open('user-menu');
+    }
 
-    modals.open('login-signup'); 
 }
+
 
 
 async function search( event ) {
@@ -153,7 +211,7 @@ async function search( event ) {
 }
 
 
-( function main() {
+( async function main() {
 
     /* This is getting annoying while testing code unrelated to the user's position :| 
     if ( navigator.geolocation ) {
@@ -168,5 +226,18 @@ async function search( event ) {
     }
 
     */
+
+    try {
+        let response = await client.reAuthenticate();
+        console.log( "Attempted to Reauthenticate: Success", response );
+
+        state.user = {
+            email: response.user.email,
+            is_admin: response.user.is_admin ? true : false
+        }
+    } catch(error) {
+        console.log( "Attempted to Reauthenticate: Failed", error );
+    }
+
         
 } )();
