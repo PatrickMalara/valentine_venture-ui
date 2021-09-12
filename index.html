@@ -24,7 +24,9 @@
 
           <form onsubmit="search(event)" action="" class="search-bar">
               <div style="display: flex; width: 100%">
-                  <img src="assets/logo.png" style="height: 24px; margin-right: 0.5rem;" />
+                  <button onclick="open_login_signup_modal(event)" style="height: 24px; background: white; border: none; margin-right: 0.5rem;"/>
+                    <img src="assets/logo.png" style="height: 24px;" />
+                  </button>
                   <input type="text" style="width: calc(100% - 3rem); "/>
               </div>
               <button type="submit"> Search </button>
@@ -105,6 +107,26 @@
               
           </article>
       </div>
+
+      <div id="login-signup" class="modal" style="display: none; filter: opacity(0%);"> 
+          <article class="modal-content" style="height: auto;">
+              <div class="modal-header">
+                <h3> <i class="bi-heart-fill"></i> Login or Signup </h3>
+                <i onclick="modals.close('login-signup') " class="bi bi-x" style="cursor: pointer;"> </i>
+              </div>
+
+              <h4> Signup </h4>
+              <form onsubmit="attempt_signup()">
+                  <label>Email</label> <br />
+                  <input type="text" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
+                  <label>Password</label> <br />
+                  <input type="password" name="password" /> <br /> <br />
+                  <button type="submit"> Create Account </button>
+              </form>
+              
+          </article>
+      </div>
+
 
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"

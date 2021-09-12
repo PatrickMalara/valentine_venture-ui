@@ -103,6 +103,25 @@ async function load_location_modal_contents( lat, lng ) {
 }
 
 
+// Invoked by a form's onsubmit Event
+async function attempt_signup(event) {
+    event.preventDefault();
+    event.cancelBubble = true;
+    event.stopPropagation();
+
+    console.debug( "Signup Event", event );
+}
+
+function open_login_signup_modal(event) {
+    event.preventDefault();
+    event.cancelBubble = true;
+    event.stopPropagation();
+
+
+    modals.open('login-signup'); 
+}
+
+
 async function search( event ) {
     event.preventDefault(); 
 
@@ -136,6 +155,7 @@ async function search( event ) {
 
 ( function main() {
 
+    /* This is getting annoying while testing code unrelated to the user's position :| 
     if ( navigator.geolocation ) {
         navigator.geolocation.getCurrentPosition( (position) => {
             state.user_pos = position.coords;
@@ -146,5 +166,7 @@ async function search( event ) {
 
         
     }
+
+    */
         
 } )();
