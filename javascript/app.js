@@ -48,6 +48,9 @@ const state = {
     locations_array:    [],
     selected_location:  undefined,
 
+
+    categories:         [],
+
     preferences: [
         { name: "animals",  applied: false },
         { name: "outdoors", applied: false },
@@ -124,18 +127,25 @@ async function attempt_login(event) {
         return;
     }
 
-    let response = await client.authenticate( {
-        strategy: "local",
-        email: email,
-        password: password
-    } );
+    try { 
+        let response = await client.authenticate( {
+            strategy: "local",
+            email: email,
+            password: password
+        } );
 
-    state.user = {
-        email: email,
-        is_admin: false
+        state.user = {
+            email: email,
+            is_admin: false
+        }
+
+        console.debug( response );
+
+        modals.open("user-menu");
+
+    } catch(error) {
+        console.error( error );
     }
-
-    console.debug( response );
 }
 
 
@@ -165,6 +175,7 @@ async function attempt_signup(event) {
     }
 }
 
+
 function open_login_signup_modal(event) {
     event.preventDefault();
     event.cancelBubble = true;
@@ -178,6 +189,38 @@ function open_login_signup_modal(event) {
 
 }
 
+function create_suggestion_record(event) {
+    event.preventDefault();
+    const suggestion_name           = event.target["suggestion-name"].value.trim();
+    const suggestion_description    = event.target["suggestion-description"].value.trim();
+    const suggestion_category       = event.target["suggestion-category"].value.trim();
+    const suggestion_address        = event.target["suggestion-address"].value.trim();
+
+
+
+    try {
+        client.service("suggestions").create( {
+            user_id:            state.user.id,
+            name:               suggestion_name,
+            description:        suggestion_description,
+            address:            suggestion_address,
+            latitude:           modals.suggestion_marker.getLatLng().lat,
+            longitude:          modals.suggestion_marker.getLatLng().lng,
+            main_category_id:   suggestion_category
+        } );
+
+    } catch( error ) {
+        console.error("Failed to create the suggestion. Error: ", error);
+    }
+}
+
+
+function create_category(event) {
+    event.preventDefault();
+    client.service("categories").create( {
+        name: event.target["name"].value.trim()
+    } );
+}
 
 
 async function search( event ) {
@@ -232,6 +275,7 @@ async function search( event ) {
         console.log( "Attempted to Reauthenticate: Success", response );
 
         state.user = {
+            id: response.user.id,
             email: response.user.email,
             is_admin: response.user.is_admin ? true : false
         }
@@ -239,5 +283,11 @@ async function search( event ) {
         console.log( "Attempted to Reauthenticate: Failed", error );
     }
 
+    try {
+        let response = await client.service('categories').find();
+        state.categories = response.data;
+    } catch(error) {
+        console.log( "Attempted to Reauthenticate: Failed", error );
+    }
         
 } )();

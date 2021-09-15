@@ -115,9 +115,11 @@
                 <i onclick="modals.close('user-menu') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <button onclick=" modals.open('suggest-location') "> 
-                  <i class="bi bi-lightbulb "></i> Suggest a Location 
-              </button>
+              <div id="user-menu-content">
+                  <button onclick=" modals.open('suggest-location') "> 
+                      <i class="bi bi-lightbulb "></i> Suggest a Location 
+                  </button>
+              </div>
               
           </article>
       </div>
@@ -126,26 +128,75 @@
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
                   <h3> <i class="bi-lightbulb" ></i> Suggest a Location </h3>
-                <i onclick="modals.close('suggest-location) " class="bi bi-x" style="cursor: pointer;"> </i>
+                <i onclick="modals.close('suggest-location') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <form onsubmit="suggest_date(event)" > 
-                    <label> Location Name </label> <br />
-                    <input type="text" id="location-name" name="name"> <br /> <br />
+              <form onsubmit="create_suggestion_record(event)" > 
+                    <label> Location Name *</label> <br />
+                    <input type="text" id="suggestion-name" name="name" required> <br /> <br />
 
-                    <label> Description *</label> <br />
-                    <input type="text" id="description" name="description"> <br /> <br />
+                    <label> Description</label> <br />
+                    <input type="text" id="suggestion-description" name="description"> <br /> <br />
     
-                    <label> Address </label> <br />
-                    <input type="text" id="address" name="address"> <br /> <br />
+                    <label> Main Category </label> <br />
+                    <select  id="suggestion-category" name="select"> 
+                    </select><br /> <br />
+
+                    <label> Street Address *<i style=" font-size: small; color: lightgray;">Drag the marker to be more precise</i> </label> <br />
+                    <input type="text" id="suggestion-address" name="address" required > <br /> <br />
 
                     <div id="suggestion-map" style=" width: 100%; height: 280px; "> </div> <br />
 
                     <button type="submit"> Suggest </button>
               </form>
+
               
           </article>
       </div>
+
+
+      <div id="review-suggestions" class="modal" style="display: none; filter: opacity(0%);"> 
+          <article class="modal-content" style="height: auto;">
+              <div class="modal-header">
+                  <h3> <i class="bi-check-circle" ></i> Review Suggestions </h3>
+                <i onclick="modals.close('review-suggestions') " class="bi bi-x" style="cursor: pointer;"> </i>
+              </div>
+
+              <button> <i class="bi bi-chevron-left"></i> </button>
+              <button> <i class="bi bi-chevron-right"></i> </button>
+              <br />
+              <button> Decline Suggestion </button>
+
+              <form onsubmit="create_location_record(event)" > 
+                    <label> Location Name</label> <br />
+                    <input type="text" id="review-name" name="name" required> <br /> <br />
+
+                    <label> Description</label> <br />
+                    <input type="text" id="review-description" name="description" required > <br /> <br />
+
+                    <label> Website </label> <br />
+                    <input type="text" id="review-website" name="website"> <br /> <br />
+    
+                    <label> Main Category </label> <br />
+                    <select  id="suggestion-category" name="select"> 
+                    </select><br /> <br />
+
+                    <!-- @TODO  <label> Other Categories (N/A) </label> <br />
+                    <select  id="suggestion-category" name="select"> 
+                    </select><br /> <br /> -->
+
+                    <label> Street Address *<i style=" font-size: small; color: lightgray;">Drag the marker to be more precise</i> </label> <br />
+                    <input type="text" id="suggestion-address" name="address" required > <br /> <br />
+
+                    <div id="review-map" style=" width: 100%; height: 280px; "> </div> <br />
+
+                    <button type="submit"> Suggest </button>
+              </form>
+
+              
+          </article>
+      </div>
+
 
       <div id="login-signup" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
@@ -157,9 +208,9 @@
               <h4> Login </h4>
               <form onsubmit="attempt_login(event)">
                   <label>Email</label> <br />
-                  <input type="email name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
+                  <input type="email id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
                   <label>Password</label> <br />
-                  <input type="password" name="password" /> <br /> <br />
+                  <input type="password" id="password" name="password" /> <br /> <br />
                   <button type="submit"> Login </button>
               </form>
 

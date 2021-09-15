@@ -22,10 +22,12 @@
 
     background-color: #FFF;
 
-    height: calc( 100vh - 4rem );
+    max-height: calc( 100vh - 4rem );
     width: calc( 100vw - 4rem );
 
     border-radius: 6px;
+
+    overflow-y: auto;
 }
 
 .modal-header {
