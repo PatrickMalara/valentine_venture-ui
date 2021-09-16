@@ -169,16 +169,16 @@
 
               <form onsubmit="create_location_record(event)" > 
                     <label> Location Name</label> <br />
-                    <input type="text" id="review-name" name="name" required> <br /> <br />
+                    <input type="text" id="review-name" name="name" class="review-form-el" required> <br /> <br />
 
                     <label> Description</label> <br />
-                    <input type="text" id="review-description" name="description" required > <br /> <br />
+                    <input type="text" id="review-description" name="description" class="review-form-el" required > <br /> <br />
 
                     <label> Website </label> <br />
-                    <input type="text" id="review-website" name="website"> <br /> <br />
+                    <input type="text" id="review-website" name="website" class="review-form-el"> <br /> <br />
     
                     <label> Main Category </label> <br />
-                    <select  id="suggestion-category" name="select"> 
+                    <select  id="review-category" name="select" class="review-form-el"> 
                     </select><br /> <br />
 
                     <!-- @TODO  <label> Other Categories (N/A) </label> <br />
@@ -186,11 +186,11 @@
                     </select><br /> <br /> -->
 
                     <label> Street Address *<i style=" font-size: small; color: lightgray;">Drag the marker to be more precise</i> </label> <br />
-                    <input type="text" id="suggestion-address" name="address" required > <br /> <br />
+                    <input type="text" id="review-address" name="address" class="review-form-el" required > <br /> <br />
 
                     <div id="review-map" style=" width: 100%; height: 280px; "> </div> <br />
 
-                    <button type="submit"> Suggest </button>
+                    <button type="submit"> Create Location </button>
               </form>
 
               

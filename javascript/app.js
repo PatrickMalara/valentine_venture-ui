@@ -204,8 +204,8 @@ function create_suggestion_record(event) {
             name:               suggestion_name,
             description:        suggestion_description,
             address:            suggestion_address,
-            latitude:           modals.suggestion_marker.getLatLng().lat,
-            longitude:          modals.suggestion_marker.getLatLng().lng,
+            latitude:           modals.suggest_location_state.marker.getLatLng().lat,
+            longitude:          modals.suggest_location_state.marker.getLatLng().lng,
             main_category_id:   suggestion_category
         } );
 
