@@ -41,3 +41,10 @@
     margin: 0px;
 }
 
+
+.location-banner-img {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
