@@ -62,17 +62,20 @@ const state = {
 };
 
 
-function toggle_preference( pref_name ) {
-    const preference_to_toggle = state.preferences.find( pref => pref.name === pref_name );
+// Slighty confusing, and I might change this. But on the UI, i call categories "preferences"
+function toggle_preference( cat_name ) {
+    const cat_to_toggle = state.categories.find( cat => cat.name === cat_name );
 
-    if (preference_to_toggle.applied === true) { 
-        preference_to_toggle.applied = false;
-        document.getElementById("pref-" + pref_name).classList.remove("pref-applied");
+    if (cat_to_toggle.applied === true) { 
+        cat_to_toggle.applied = false;
+        document.getElementById("pref-" + cat_name).classList.remove("pref-applied");
 
     } else { 
-        preference_to_toggle.applied  = true;
-        document.getElementById("pref-" + pref_name).classList.add("pref-applied");
+        cat_to_toggle.applied  = true;
+        document.getElementById("pref-" + cat_name).classList.add("pref-applied");
     }
+
+    search();
 
 }
 
@@ -255,11 +258,17 @@ function create_category(event) {
 
 
 async function search( event ) {
-    event.preventDefault(); 
+    if( event !== undefined ) { event.preventDefault(); }
 
     try {
 
-        let response = await client.service("locations").find();
+        let response = await client.service("locations").find( { 
+            query: {
+                main_category_id: {
+                    $in: state.categories.filter( cat => cat.applied === true ).map( cat => cat.id )
+                }
+            }
+        } );
         console.log( response );
 
         state.locations_array = response.data;
@@ -317,6 +326,13 @@ async function search( event ) {
     try {
         let response = await client.service('categories').find();
         state.categories = response.data;
+
+        let i = 0;
+        let catlng = state.categories.length
+        for( i = 0; i < catlng; i += 1 ) {
+            state.categories.applied = false;
+        }
+
     } catch(error) {
         console.log( "Attempted to Reauthenticate: Failed", error );
     }
