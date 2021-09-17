@@ -7,7 +7,7 @@ const modals = {
         map:              undefined
     },
 
-    review_suggestion: {
+    review_suggestion_state: {
         map:                undefined,
         marker:             undefined,
         curr_index:         undefined, // The Index of the Suggestion that is currently being displayed
@@ -94,16 +94,16 @@ async function modal_review_suggestion_init() {
     try {
         const response = await client.service("suggestions").find();
 
-        modals.review_suggestion.suggestions_array = response.data;
+        modals.review_suggestion_state.suggestions_array = response.data;
 
-        console.debug( modals.review_suggestion );
+        console.debug( modals.review_suggestion_state );
 
         // We want to update the Modal to render the First suggestion... if there is one...
 
-        if ( modals.review_suggestion.form_elements.length === 0 ) {
-            modals.review_suggestion.form_elements = document.getElementsByClassName("review-form-el");
+        if ( modals.review_suggestion_state.form_elements.length === 0 ) {
+            modals.review_suggestion_state.form_elements = document.getElementsByClassName("review-form-el");
 
-            const category_el = modals.review_suggestion.form_elements["review-category"];
+            const category_el = modals.review_suggestion_state.form_elements["review-category"];
             if ( category_el.children.length == 0 ) {
                 let option_el = undefined;
                 for(let i = 0; i < state.categories.length; i += 1) {
@@ -116,18 +116,107 @@ async function modal_review_suggestion_init() {
         }
     
         // Corelates to the Order of the Form
-        modals.review_suggestion.form_elements["review-name"].value = 
-            modals.review_suggestion.suggestions_array[0].name;
-        modals.review_suggestion.form_elements["review-description"].value = 
-            modals.review_suggestion.suggestions_array[0].description;
-        modals.review_suggestion.form_elements["review-category"].value = 
-            modals.review_suggestion.suggestions_array[0].main_category_id;
-        modals.review_suggestion.form_elements["review-address"].value = 
-            modals.review_suggestion.suggestions_array[0].address;
+        modals.review_suggestion_state.form_elements["review-name"].value = 
+            modals.review_suggestion_state.suggestions_array[0].name;
+        modals.review_suggestion_state.form_elements["review-description"].value = 
+            modals.review_suggestion_state.suggestions_array[0].description;
+        modals.review_suggestion_state.form_elements["review-category"].value = 
+            modals.review_suggestion_state.suggestions_array[0].main_category_id;
+        modals.review_suggestion_state.form_elements["review-address"].value = 
+            modals.review_suggestion_state.suggestions_array[0].address;
 
     } catch( error ) {
         console.error( error );
     }
+
+    // Create the Map if it hasent been created yet
+    if ( modals.review_suggestion_state.map === undefined ) {
+        modals.review_suggestion_state.map = L.map("review-map").setView([43.2557, -79.8711], 13);
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoicGF0cmlja21hbGFyYWRldmVsb3BlciIsImEiOiJja3RhdG9sNWoxcHhsMnBucmN2dDBsajh2In0.SyHhgEOXvWgrBEYCEc3uAA',
+        }).addTo( modals.review_suggestion_state.map );
+
+    } else {
+        modals.review_suggestion_state.map.setView([43.2557, -79.8711], 13);
+    }
+
+    // Create the Marker 
+    if ( modals.review_suggestion_state.marker === undefined ) {
+        modals.review_suggestion_state.marker = L.marker(
+            [ 
+                modals.review_suggestion_state.suggestions_array[0].latitude,
+                modals.review_suggestion_state.suggestions_array[0].longitude
+            ], { draggable: true, icon: heartMarker });
+
+        modals.review_suggestion_state.marker.addTo( modals.review_suggestion_state.map );
+
+    } else { 
+        modals.suggest_location_state.marker.setLatLng( L.latLng(
+            modals.review_suggestion_state.suggestions_array[0].latitude,
+            modals.review_suggestion_state.suggestions_array[0].longitude,
+        ) );
+    }
+
+    modals.review_suggestion_state.map.flyTo(
+        [
+            modals.review_suggestion_state.suggestions_array[0].latitude,
+            modals.review_suggestion_state.suggestions_array[0].longitude,
+        ], 16);
+
+
+
+    modals.review_suggestion_state.form_elements["review-address"].addEventListener( // When that Address is updated, query the Latitude and Longitude and render it on the map
+        "input",
+        async (event) => {
+
+            clearTimeout( modals.review_suggestion_state.debounce_timeout );
+            modals.review_suggestion_state.debounce_timeout = setTimeout(
+                async function( ) {
+
+                    const address_to_lookup = modals.review_suggestion_state.form_elements["review-address"].value.trim(); 
+
+                    if ( address_to_lookup === "" ) {
+                        return;
+                    }
+
+
+                    let response = undefined;
+                    try {
+                        response = await fetch(`http://open.mapquestapi.com/geocoding/v1/address?key=bbvn8lIzHUQYMVAUp3TFOsK4aQl02PEG&location=${address_to_lookup}, ON, Canada&boundingBox=43.3761068333526,-80.01467127854438,43.076913126087135,-79.67581527190661`);
+                        response = await response.json();
+
+                        console.debug( response );
+
+                        if ( response.info.statuscode != 0 ) {
+                            // If there was an error calculating the Latitude and Longitude, just return.
+                            return;
+                        }
+
+                        modals.review_suggestion_state.marker.setLatLng( L.latLng(
+                            response.results[0].locations[0].latLng.lat,
+                            response.results[0].locations[0].latLng.lng
+                        ) );
+
+                        modals.review_suggestion_state.map.flyTo(
+                            [
+                                response.results[0].locations[0].latLng.lat, 
+                                response.results[0].locations[0].latLng.lng
+                            ], 16);
+
+
+                    } catch(error) { 
+                        console.error( error );
+                    }
+
+                }
+            , 500 );
+        }
+    );
 
 }
 

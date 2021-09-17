@@ -99,7 +99,7 @@ async function load_location_modal_contents( lat, lng ) {
         name_el.classList.remove("ghost-loading");
 
         const cover_el  = document.getElementById("location-modal-banner")
-        cover_el.style.background = `url('${state.selected_location.cover_img_url}') `;
+        cover_el.style.backgroundImage = `url('${state.selected_location.cover_img_url}') `;
         cover_el.classList.remove("ghost-loading");
 
         const desc_el   = document.getElementById("location-modal-description")
@@ -135,8 +135,9 @@ async function attempt_login(event) {
         } );
 
         state.user = {
-            email: email,
-            is_admin: false
+            id: response.id,
+            email: response.email,
+            is_admin: response.is_admin ? true : false
         }
 
         console.debug( response );
@@ -189,6 +190,36 @@ function open_login_signup_modal(event) {
 
 }
 
+
+function create_location_record(event) {
+    event.preventDefault();
+    const review_name           = event.target["review-name"].value.trim();
+    const review_description    = event.target["review-description"].value.trim();
+    const review_category       = event.target["review-category"].value.trim();
+    const review_address        = event.target["review-address"].value.trim();
+    const review_banner         = event.target["review-banner"].value.trim();
+    const review_website        = event.target["review-website"].value.trim();
+
+
+
+    try {
+        client.service("locations").create( {
+            name:               review_name,
+            description:        review_description,
+            address:            review_address,
+            website_url:        review_website,
+            cover_img_url:      review_banner,
+            latitude:           modals.review_suggestion_state.marker.getLatLng().lat,
+            longitude:          modals.review_suggestion_state.marker.getLatLng().lng,
+            main_category_id:   review_category
+        } );
+
+    } catch( error ) {
+        console.error("Failed to create the suggestion. Error: ", error);
+    }
+}
+
+
 function create_suggestion_record(event) {
     event.preventDefault();
     const suggestion_name           = event.target["suggestion-name"].value.trim();
@@ -228,7 +259,7 @@ async function search( event ) {
 
     try {
 
-        let response = await app.service("locations").find();
+        let response = await client.service("locations").find();
         console.log( response );
 
         state.locations_array = response.data;
