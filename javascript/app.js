@@ -35,6 +35,7 @@ function toggle_preference( cat_name ) {
 
 }
 
+/*
 async function load_location_modal_contents( lat, lng ) {
     
     try {
@@ -71,6 +72,7 @@ async function load_location_modal_contents( lat, lng ) {
     }
 
 }
+*/
 
 
 function open_login_signup_modal(event) {
@@ -173,11 +175,13 @@ async function search( event ) {
         for( let i = 0; i < response.data.length; i += 1 ) {
             const marker = L.marker([ response.data[i].latitude, response.data[i].longitude ], { icon: heartMarker })
 
+
             marker.addEventListener(
                 "click", 
                 (event) => { 
                     modals.open("location");
-                    load_location_modal_contents( event.latlng.lat, event.latlng.lng );
+                    console.debug("Response:", response.data[i]);
+                    modals.location.load_location( response.data[i].id );
                     console.debug(event); 
                 }
             );

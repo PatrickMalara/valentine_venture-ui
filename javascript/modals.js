@@ -381,6 +381,93 @@ const modals = {
     },
 
 
+    location: {
+        the_location: undefined,
+
+        save_location: async function() {
+            try {
+                const response = await client.service("saved-locations").create( {
+                    user_id:        state.user.id,
+                    location_id:    state.selected_location.id 
+                } );
+
+                console.log("Yay, location saved!");
+
+            } catch(error) {
+                console.error("Failed to save Location: ", error);
+            }
+        },
+         
+        load_location: async function( location_id ) {
+           try {
+                let response = await client.service("locations").get( location_id );
+
+                console.log(" response from location Modal:", response );
+
+                state.selected_location = response;
+
+                // Update the contents of the Modal
+                const name_el   = document.getElementById("location-modal-name");
+                name_el.innerText = state.selected_location.name;
+                name_el.classList.remove("ghost-loading");
+
+                const cover_el  = document.getElementById("location-modal-banner")
+                cover_el.style.backgroundImage = `url('${state.selected_location.cover_img_url}') `;
+                cover_el.classList.remove("ghost-loading");
+
+                const desc_el   = document.getElementById("location-modal-description")
+                desc_el.innerText = state.selected_location.description;
+                desc_el.classList.remove("ghost-loading");
+
+
+            } catch( error ) {
+                console.error( error );
+            } 
+        }
+    },
+
+
+    saved_locations: {
+
+        saved_array: [],
+
+        init: async function() {
+
+            try {
+                const response = await client.service("saved-locations").find( {
+                    query: {
+                        user_id: state.user.id
+                    }
+                } );
+
+                this.saved_array = response.data;
+
+                // Update the Modal DOM
+                let saved_item = document.getElementById("template-saved-item").content.firstElementChild.cloneNode(true);
+                const ul_el = document.getElementById("saved-list");
+                while( ul_el.firstChild ) { 
+                    ul_el.removeChild( ul_el.firstChild );
+                }
+
+                let i = 0;
+                const length = this.saved_array.length;
+                for( i = 0; i < length; i += 1 ) {
+                    saved_item = saved_item.cloneNode(true);
+                    saved_item.lastElementChild.innerText = this.saved_array[i].location_id
+                    ul_el.appendChild( saved_item );
+                }
+
+            } catch (error) {
+                console.error( "Error fetching saved locations", error );
+
+            }
+
+        }
+    },
+
+    preferences: {},
+
+
     // Close every modal and open the 'parameterized' modal
     open: function( modal_to_open ) {
         console.log("Opening modal: ", modal_to_open );

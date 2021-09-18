@@ -52,7 +52,7 @@
 
         <section class="bottom-right-buttons">
             <button id="btn-random-location"> <i class="bi bi-dice-5-fill"></i> </button>
-            <button id="btn-saved-locations"> <i class="bi bi-bookmark-fill"></i> </button>
+            <button id="btn-saved-locations" onclick="modals.open('saved_locations')" > <i class="bi bi-bookmark-fill"></i> </button>
         </sections>
 
       </main>
@@ -70,7 +70,7 @@
               <div id="location-modal-banner" class="location-banner-img" style="min-height: 6rem;" class="ghost-loading">
               </div>
 
-              <button onclick="toggle_save_location"> <i class="bi bi-bookmark-fill" ></i> </button>
+              <button onclick="modals.location.save_location()"> <i class="bi bi-bookmark-fill" ></i> </button>
 
               <p id="location-modal-description" style="min-height:4rem" class="ghost-loading">
               </p>
@@ -103,10 +103,13 @@
                 <i onclick="modals.close('saved_locations') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <h6> <i class="bi bi-geo-pin"> </i> Location Name </h6>
-              <h6> <i class="bi bi-geo-pin"> </i> Location Name </h6>
-              <h6> <i class="bi bi-geo-pin"> </i> Location Name </h6>
-              <h6> <i class="bi bi-geo-pin"> </i> Location Name </h6>
+              <ul id="saved-list" style="list-style: none;">
+              </ul>
+              <template id="template-saved-item">
+                  <li> 
+                      <i class="bi bi-geo-alt-fill"> </i> <span>Location Name</span> 
+                  </li>
+              </template>
               
           </article>
       </div>
