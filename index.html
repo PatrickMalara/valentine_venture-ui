@@ -52,7 +52,7 @@
 
         <section class="bottom-right-buttons">
             <button id="btn-random-location"> <i class="bi bi-dice-5-fill"></i> </button>
-            <button id="btn-saved-locations"> <i class="bi bi-bookmark-fill"></i> </button>
+            <button id="btn-saved-locations" onclick="modals.open('saved_locations')" > <i class="bi bi-bookmark-fill"></i> </button>
         </sections>
 
       </main>
@@ -70,7 +70,7 @@
               <div id="location-modal-banner" class="location-banner-img" style="min-height: 6rem;" class="ghost-loading">
               </div>
 
-              <button onclick="toggle_save_location"> <i class="bi bi-bookmark-fill" ></i> </button>
+              <button onclick="modals.location.save_location()"> <i class="bi bi-bookmark-fill" ></i> </button>
 
               <p id="location-modal-description" style="min-height:4rem" class="ghost-loading">
               </p>
@@ -96,26 +96,29 @@
       </div>
 
 
-      <div id="saved-locations" class="modal" style="display: none; filter: opacity(0%);"> 
+      <div id="saved_locations" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
                   <h3> <i class="bi-bookmark-fill"></i> Saved Locations</h3>
-                <i onclick="modals.close('saved-locations') " class="bi bi-x" style="cursor: pointer;"> </i>
+                <i onclick="modals.close('saved_locations') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <h6> <i class="bi bi-geo-pin"> </i> Location Name </h6>
-              <h6> <i class="bi bi-geo-pin"> </i> Location Name </h6>
-              <h6> <i class="bi bi-geo-pin"> </i> Location Name </h6>
-              <h6> <i class="bi bi-geo-pin"> </i> Location Name </h6>
+              <ul id="saved-list" style="list-style: none;">
+              </ul>
+              <template id="template-saved-item">
+                  <li> 
+                      <i class="bi bi-geo-alt-fill"> </i> <span>Location Name</span> 
+                  </li>
+              </template>
               
           </article>
       </div>
 
-      <div id="user-menu" class="modal" style="display: none; filter: opacity(0%);"> 
+      <div id="user_menu" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
                   <h3> <i class="bi-heart-fill"></i> User Menu </h3>
-                <i onclick="modals.close('user-menu') " class="bi bi-x" style="cursor: pointer;"> </i>
+                <i onclick="modals.close('user_menu') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
               <div id="user-menu-content">
@@ -127,11 +130,11 @@
           </article>
       </div>
 
-      <div id="suggest-location" class="modal" style="display: none; filter: opacity(0%);"> 
+      <div id="suggest_location" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
                   <h3> <i class="bi-lightbulb" ></i> Suggest a Location </h3>
-                <i onclick="modals.close('suggest-location') " class="bi bi-x" style="cursor: pointer;"> </i>
+                <i onclick="modals.close('suggest_location') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
               <form onsubmit="create_suggestion_record(event)" > 
@@ -158,17 +161,17 @@
       </div>
 
 
-      <div id="review-suggestions" class="modal" style="display: none; filter: opacity(0%);"> 
+      <div id="review_suggestions" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
                   <h3> <i class="bi-check-circle" ></i> Review Suggestions </h3>
-                <i onclick="modals.close('review-suggestions') " class="bi bi-x" style="cursor: pointer;"> </i>
+                <i onclick="modals.close('review_suggestions') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <button> <i class="bi bi-chevron-left"></i> </button>
-              <button> <i class="bi bi-chevron-right"></i> </button>
+              <button onclick="modals.review_suggestions.previous_suggestion()" > <i class="bi bi-chevron-left"></i> </button>
+              <button onclick="modals.review_suggestions.next_suggestion()"> <i class="bi bi-chevron-right"></i> </button>
               <br />
-              <button> Decline Suggestion </button>
+              <button onclick="modals.review_suggestions.delete_curr_suggestion()"> Decline Suggestion </button>
 
               <form onsubmit="create_location_record(event)" > 
                     <label> Location Name</label> <br />
@@ -205,15 +208,15 @@
       </div>
 
 
-      <div id="login-signup" class="modal" style="display: none; filter: opacity(0%);"> 
+      <div id="login_signup" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
                 <h3> <i class="bi-heart-fill"></i> Login or Signup </h3>
-                <i onclick="modals.close('login-signup') " class="bi bi-x" style="cursor: pointer;"> </i>
+                <i onclick="modals.close('login_signup') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
               <h4> Login </h4>
-              <form onsubmit="attempt_login(event)">
+              <form onsubmit="modals.login_signup.attempt_login(event)">
                   <label>Email</label> <br />
                   <input type="email id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
                   <label>Password</label> <br />
@@ -224,7 +227,7 @@
               <hr />
 
               <h4> Signup </h4>
-              <form onsubmit="attempt_signup(event)">
+              <form onsubmit="modals.login_signup.attempt_signup(event)">
                   <label>Email</label> <br />
                   <input type="email id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
                   <label>Password</label> <br />
@@ -242,6 +245,7 @@
    crossorigin=""></script>
     <script src="javascript/external/feathers.js"></script>
     <script src="javascript/external/socket.io.js"></script>
+    <script src="javascript/global.js"></script>
     <script src="javascript/app.js"></script>
     <script src="javascript/modals.js"></script>
 
