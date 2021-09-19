@@ -453,7 +453,7 @@ const modals = {
                 const length = this.saved_array.length;
                 for( i = 0; i < length; i += 1 ) {
                     saved_item = saved_item.cloneNode(true);
-                    saved_item.lastElementChild.innerText = this.saved_array[i].location_id
+                    saved_item.lastElementChild.innerText = this.saved_array[i].location_name
                     ul_el.appendChild( saved_item );
                 }
 
