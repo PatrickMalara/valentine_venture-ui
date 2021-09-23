@@ -17,4 +17,13 @@
     color: white;
 
     margin-left: 0.5rem;
+
+    border-radius: 6px;
 }
+.pref-applied > span:last-child { 
+    display: none;
+}
+.pref-applied:hover > span:last-child {
+    display: inline;
+}
+
