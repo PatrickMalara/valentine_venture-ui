@@ -27,12 +27,12 @@
 
           <form onsubmit="search(event)" action="" class="search-bar">
               <div style="display: flex; width: 100%">
-                  <button onclick="open_login_signup_modal(event)" style="height: 24px; background: white; border: none; margin-right: 0.5rem;"/>
+                  <div onclick="open_login_signup_modal(event)" style="height: 24px; background: white; border: none; margin-right: 0.5rem;"/>
                     <img src="assets/logo.png" style="height: 24px;" />
-                  </button>
-                  <input type="text" style="width: calc(100% - 3rem); "/>
+                  </div>
+                  <input type="text" name="search-bar" id="search-bar" style="width: calc(100% - 3rem); "/>
               </div>
-              <button type="submit"> Search </button>
+              <button type="submit" name="search-btn"> Search </button>
           </form>
 
           <div id="map" style="width: 100%; height: 100vh;" class=""> </div>
@@ -40,12 +40,12 @@
         <section class="preferences">
             <button onclick="modals.open('preferences')"> <i class="bi bi-sliders"></i> Preferences </button>
             
-            <button id="pref-outdoors" class="preference"> Outdoors </button>
-            <button id="pref-eating" class="preference"> Eating </button>
-            <button id="pref-drinking" class="preference"> Drinking </button>
-            <button id="pref-art" class="preference"> Art </button>
-            <button id="pref-games" class="preference"> Games </button>
-            <button id="pref-animals" class="preference"> Animals </button>
+            <button id="pref-outdoors" class="preference" onclick="toggle_preference('outdoors')" > Outdoors <span>x</span> </button>
+            <button id="pref-eating" class="preference" onclick="toggle_preference('eating')" > Eating <span>x</span> </button>
+            <button id="pref-drinking" class="preference" onclick="toggle_preference('drinking')" > Drinking <span>x</span> </button>
+            <button id="pref-art" class="preference" onclick="toggle_preference('art')"> Art <span>x</span> </button>
+            <button id="pref-games" class="preference" onclick="toggle_preference('games')"> Games <span>x</span> </button>
+            <button id="pref-animals" class="preference" onclick="toggle_preference('animals')"> Animals <span>x</span> </button>
               
         </section>
 
@@ -114,6 +114,7 @@
           </article>
       </div>
 
+
       <div id="user_menu" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
@@ -129,6 +130,7 @@
               
           </article>
       </div>
+
 
       <div id="suggest_location" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
@@ -156,7 +158,6 @@
                     <button type="submit"> Suggest </button>
               </form>
 
-              
           </article>
       </div>
 

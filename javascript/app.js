@@ -4,6 +4,10 @@ const state = {
     locations_array:    [],
     selected_location:  undefined,
 
+    search_term:        "",
+
+    map_markers:        [],
+
 
     categories:         [],
 
@@ -158,23 +162,42 @@ function create_category(event) {
 
 
 async function search( event ) {
-    if( event !== undefined ) { event.preventDefault(); }
+    
+    if( event !== undefined ) { 
+        event.preventDefault(); 
+        console.log( event.target );
+        state.search_term = event.target["0"].value.trim(); // The search bar
+    }
 
     try {
 
-        let response = await client.service("locations").find( { 
+        let categories_applied = [];
+        if ( state.categories.filter( cat => cat.applied === true ).length === 0 ) {
+            categories_applied = state.categories.map( cat => cat.id );
+        } else {
+            categories_applied = state.categories.filter( cat => cat.applied === true ).map( cat => cat.id );
+        }
+
+        let response = await client.service("search-controller").find( { 
             query: {
+                search_term: state.search_term,
                 main_category_id: {
-                    $in: state.categories.filter( cat => cat.applied === true ).map( cat => cat.id )
+                    $in: categories_applied
                 }
             }
         } );
         console.log( response );
 
+        // Remove the Markers from the Map, even though I should be using Object Pooling, but who cares....
+        for( let i = 0; i < state.map_markers.length; i += 1 ) {
+            state.map_markers[i].remove();
+        }
+
         state.locations_array = response.data;
-        for( let i = 0; i < response.data.length; i += 1 ) {
+        for( let i = 0; i < response.data.length; i += 1 ) {        // @TODO use Object Pooling
             const marker = L.marker([ response.data[i].latitude, response.data[i].longitude ], { icon: heartMarker })
 
+            state.map_markers.push( marker );
 
             marker.addEventListener(
                 "click", 
@@ -241,5 +264,7 @@ async function search( event ) {
     } catch(error) {
         console.log( "Attempted to Reauthenticate: Failed", error );
     }
+
+    search();
         
 } )();
