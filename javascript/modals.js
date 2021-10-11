@@ -383,6 +383,7 @@ const modals = {
 
     location: {
         the_location: undefined,
+        is_dropdown_open: false,
 
         save_location: async function() {
             try {
@@ -423,6 +424,35 @@ const modals = {
             } catch( error ) {
                 console.error( error );
             } 
+        },
+
+        dropdown_click_listener: function(event) {
+            console.debug("dropdown_click_listener Created", event);
+
+            if ( this.is_dropdown_open === true ) {
+                if ( event.target.nodeName !== "LI" && event.target.nodeName !== "UL" && event.target.id !== "dropdown") {
+                    const dropdown_el = document.getElementById("location_option_dropdown");
+                    dropdown_el.style.display = "none";
+                    document.removeEventListener( "click", this.dropdown_click_listener );
+
+                    this.is_dropdown_open = false;
+                }    
+
+            } else {
+                this.is_dropdown_open = true;
+            }
+
+        },
+
+        open_location_option_dropdown: function(event) {
+            console.debug(event);
+            const dropdown_el = document.getElementById("location_option_dropdown");
+
+            dropdown_el.style.display = "block";
+            dropdown_el.style.left = (event.clientX - 30) + "px";
+            dropdown_el.style.top = (event.clientY - 15) + "px";
+
+            document.addEventListener( "click", this.dropdown_click_listener );
         }
     },
 

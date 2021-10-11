@@ -67,3 +67,27 @@ button {
 
     cursor: pointer;
 }
+
+
+
+.dropdown {
+    top: 0;
+    left: 0;
+    background-color: #FFF;
+    position: absolute;
+    border-radius: 6px;
+    padding: 0.25rem;
+    display: none;
+    width: 100px;
+    border: 1px solid #c5c5c5;
+
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+.dropdown > ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+.dropdown > ul > li { 
+    cursor: pointer;
+}

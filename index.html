@@ -70,10 +70,22 @@
               <div id="location-modal-banner" class="location-banner-img" style="min-height: 6rem;" class="ghost-loading">
               </div>
 
-              <button onclick="modals.location.save_location()"> <i class="bi bi-bookmark-fill" ></i> </button>
+              <button onclick="modals.location.open_location_option_dropdown(event)" id="dropdown"> <i id="dropdown" class="bi bi-three-dots"></i> </button>
+
 
               <p id="location-modal-description" style="min-height:4rem" class="ghost-loading">
               </p>
+
+
+              <button onclick="modals.location.save_location()"> <i class="bi bi-bookmark-fill" style="color: green;"></i> </button>
+
+              <div id="location_option_dropdown" class="dropdown"> 
+                  <ul>
+                      <li> <i class="bi bi-hand-thumbs-up-fill"></i> Like </li>
+                      <li> <i class="bi bi-hand-thumbs-down-fill"></i> Dislike </li>
+                      <li> <i class="bi bi-flag"></i> Flag </li>
+                  </ul>
+              </div>
           </article>
       </div>
 

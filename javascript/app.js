@@ -19,11 +19,15 @@ const state = {
         { name: "art",      applied: false },
         { name: "drinking", applied: false }
     ],
+
 };
 
 
 // Slighty confusing, and I might change this. But on the UI, i call categories "preferences"
 function toggle_preference( cat_name ) {
+
+    console.debug( "Category Name: ", cat_name);
+
     const cat_to_toggle = state.categories.find( cat => cat.name === cat_name );
 
     if (cat_to_toggle.applied === true) { 
@@ -180,10 +184,11 @@ async function search( event ) {
 
         let response = await client.service("search-controller").find( { 
             query: {
-                search_term: state.search_term,
-                main_category_id: {
+                search_term:    state.search_term,
+                categories:     categories_applied
+                /*main_category_id: {
                     $in: categories_applied
-                }
+                }*/
             }
         } );
         console.log( response );
@@ -217,6 +222,9 @@ async function search( event ) {
     }
 
 }
+
+
+
 
 
 ( async function main() {

@@ -1,4 +1,5 @@
 //Globals
+//const socket    = io("https://valentine-venture-server.herokuapp.com/");
 const socket    = io("http://localhost:3030");
 const client    = feathers();
 
