@@ -88,20 +88,24 @@
 
                 <h5 style="margin-bottom: 2px;"> <i class="bi bi-chat-left-dots-fill text-red"></i> Comments </h5>
 
-                <form id="comment_form" style="margin-bottom: 2rem; display: none;">
+                <form id="comment_form" onsubmit="modals.location.comment_location(event)" style="margin-bottom: 2rem; display: none;">
                     <textarea id="comment_box" style="width: calc(100% - 0.5rem); background-color: #f8f8f8; border-radius: 6px; border: 1px solid #c5c5c5;"></textarea>
-                    <button style="float: right; margin-top: 4px;" > Comment </button>
+                    <button type="submit" style="float: right; margin-top: 4px;"> Comment </button>
                 </form>
 
-                <div style="margin-left: 1rem;">
-                    <p style="background-color: #f8f8f8; padding: 0.25rem; border-radius: 6px; margin: 0px; font-size: smaller; ">
-                        Wow this is a really good place
-                    </p>
-                    <span style="float: right;">
-                        <i style="font-size: x-small; " >Patrick Malara - 2021-10-06</i>
-                    </span>
+                <div id="comment-container" ></div>
 
-                </div>
+                <template id="template-comment">
+                    <div style="margin: 0rem 0rem 2rem 1rem;">
+                        <p style="background-color: #f8f8f8; padding: 0.25rem; border-radius: 6px; margin: 0px; font-size: smaller; ">
+                            Wow this is a really good place
+                        </p>
+                        <span style="float: right;">
+                            <i style="font-size: x-small; " >Patrick Malara - 2021-10-06</i>
+                        </span>
+
+                    </div>
+                </template>
 
 
               </div>

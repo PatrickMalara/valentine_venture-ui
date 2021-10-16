@@ -23,8 +23,8 @@ const modals = {
                 } );
 
                 state.user = {
-                    id: response.id,
-                    email: response.email,
+                    id: response.user.id,
+                    email: response.user.email,
                     is_admin: response.is_admin ? true : false
                 }
 
@@ -420,6 +420,33 @@ const modals = {
                 desc_el.innerText = state.selected_location.description;
                 desc_el.classList.remove("ghost-loading");
 
+                
+                state.selected_location["comments"] = ( await client.service("comments").find( { 
+                    query: {
+                        location_id: state.selected_location.id
+                    }
+                } ) ).data;
+
+                state.selected_location["ratings"] = ( await client.service("ratings").find( { 
+                    query: {
+                        location_id: state.selected_location.id
+                    }
+                } ) ).data;
+
+
+                const comment_container = document.getElementById("comment-container");
+                while( comment_container.firstChild ) {
+                    comment_container.removeChild( comment_container.firstChild );
+                }
+
+                const comment_template = document.getElementById("template-comment").content.firstElementChild.cloneNode(true);
+                let i = 0;
+                const length = state.selected_location.comments.length;
+                for( i = 0; i < length; i += 1 ) {
+                    comment_el  = comment_template.cloneNode(true);
+                    comment_el.firstElementChild.innerText = state.selected_location.comments[i].comment
+                    comment_container.appendChild( comment_el );
+                }
 
             } catch( error ) {
                 console.error( error );
@@ -492,7 +519,39 @@ const modals = {
                     this.is_dropdown_open = false;
 
             comment_box_el.focus();
+        },
+
+        comment_location: async function(event) {
+            event.preventDefault();
+
+            const comment_text = event.target["0"].value;
+
+            if ( comment_text.trim() === "" ) { return; } // Dont comment empty string
+
+            try { 
+                await client.service( "comments" ).create( {
+                    user_id:        state.user.id,
+                    location_id:    state.selected_location.id,
+                    comment:        comment_text.trim()
+                } );
+
+                const comment_container = document.getElementById("comment-container");
+                const comment_template = document.getElementById("template-comment").content.firstElementChild.cloneNode(true);
+                const comment_el = comment_template.cloneNode(true);
+                comment_el.firstElementChild.innerText = comment_text.trim();
+                comment_container.appendChild( comment_el );
+
+
+                document.getElementById("comment_form").style.display = "none";
+                event.target["0"].value = "";
+                
+
+            } catch(error) {
+                console.error(error);
+            }
+
         }
+
     },
 
 
