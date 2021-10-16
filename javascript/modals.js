@@ -433,7 +433,7 @@ const modals = {
                 if ( event.target.nodeName !== "LI" && event.target.nodeName !== "UL" && event.target.id !== "dropdown") {
                     const dropdown_el = document.getElementById("location_option_dropdown");
                     dropdown_el.style.display = "none";
-                    document.removeEventListener( "click", this.dropdown_click_listener );
+                    window.removeEventListener( "click", modals.location.dropdown_click_listener );
 
                     this.is_dropdown_open = false;
                 }    
@@ -449,10 +449,49 @@ const modals = {
             const dropdown_el = document.getElementById("location_option_dropdown");
 
             dropdown_el.style.display = "block";
-            dropdown_el.style.left = (event.clientX - 30) + "px";
+            dropdown_el.style.left = (event.clientX - 100) + "px";
             dropdown_el.style.top = (event.clientY - 15) + "px";
 
-            document.addEventListener( "click", this.dropdown_click_listener );
+            window.addEventListener( "click", modals.location.dropdown_click_listener );
+        },
+
+        like_location: async function() {
+            try {
+                const response = client.service("ratings").create( {
+                    liked: true,
+                    user_id: state.user.id, 
+                    location_id: state.selected_location.id
+                } );
+            } catch( error ) {
+                console.error( error );
+            }
+
+        },
+
+        dislike_location: async function() { 
+            try {
+                const response = client.service("ratings").create( {
+                    liked: false,
+                    user_id: state.user.id, 
+                    location_id: state.selected_location.id
+                } );
+            } catch( error ) {
+                console.error( error );
+            }
+        },
+
+        open_comment_box: function() { 
+            document.getElementById("comment_form").style.display = "block";
+            const comment_box_el = document.getElementById("comment_box");
+
+            // Took from the dropdown_click_listener()
+                    const dropdown_el = document.getElementById("location_option_dropdown");
+                    dropdown_el.style.display = "none";
+                    window.removeEventListener( "click", modals.location.dropdown_click_listener );
+
+                    this.is_dropdown_open = false;
+
+            comment_box_el.focus();
         }
     },
 
@@ -519,6 +558,11 @@ const modals = {
     },
 
     close: function( modal_to_close ) {
+
+       if ( modal_to_close === "location" ) {
+            document.getElementById("comment_form").style.display = "none";
+       }
+
        this.modal_elements[modal_to_close].style.display = "none";
     }
 };

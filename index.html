@@ -3,8 +3,8 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
@@ -23,8 +23,6 @@
   </head>
   <body>
 
-      <main>
-
           <form onsubmit="search(event)" action="" class="search-bar">
               <div style="display: flex; width: 100%">
                   <div onclick="open_login_signup_modal(event)" style="height: 24px; background: white; border: none; margin-right: 0.5rem;"/>
@@ -35,7 +33,7 @@
               <button type="submit" name="search-btn"> Search </button>
           </form>
 
-          <div id="map" style="width: 100%; height: 100vh;" class=""> </div>
+          <div id="map" style="width: 100vw; height: 100%;" class=""> </div>
 
         <section class="preferences">
             <button onclick="modals.open('preferences')"> <i class="bi bi-sliders"></i> Preferences </button>
@@ -55,35 +53,70 @@
             <button id="btn-saved-locations" onclick="modals.open('saved_locations')" > <i class="bi bi-bookmark-fill"></i> </button>
         </sections>
 
-      </main>
 
 
         <!-- Below are the Modals -->        
 
-      <div id="location" class="modal" style="display: none; filter: opacity(0%);"> 
-          <article class="modal-content">
-              <div class="modal-header">
-                <h3 id="location-modal-name" class="ghost-loading"> </h3>
-                <i onclick="modals.close('location') " class="bi bi-x" style="cursor: pointer;"> </i>
+      <div id="location" class="modal " style="display: none; filter: opacity(0%);"> 
+          <article class="modal-content modal--location">
+              <div class="">
+                <div id="location-modal-banner" class="location-banner-img" style="min-height: 8rem; background-color: #f8f8f8;" class="ghost-loading"> </div>
+                <i onclick="modals.close('location') " class="bi bi-x" style="cursor: pointer; position: absolute; top: 2.5rem; right: 2rem; color: white;"> </i>
               </div>
 
-              <div id="location-modal-banner" class="location-banner-img" style="min-height: 6rem;" class="ghost-loading">
+              <div class="location-content" style="padding: 0px 0.5rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <h3 id="location-modal-name" class="ghost-loading" style="margin: 2px;"> </h3>
+
+                    <div style="text-align: right;">
+                        <button onclick="modals.location.open_location_option_dropdown(event)" id="dropdown"> 
+                            <i id="dropdown" class="bi bi-three-dots"></i> 
+                        </button>
+                        <br>
+                        <div style="white-space: nowrap;">
+                            <span style="font-size: x-small;" class="text-blue">
+                                <i class="bi bi-hand-thumbs-up-fill"></i> <span id="like_count">190</span>
+                            </span>
+                            <span style="font-size: x-small;" class="text-orange">
+                                <i class="bi bi-hand-thumbs-down-fill"></i> <span id="dislike_count">13</span>
+                            </span>
+                        </div>
+                    </div>
+                  </div>
+
+                <p id="location-modal-description" style="min-height:4rem; font-size: smaller; background-color: #f8f8f8; padding: 0.25rem; " class="ghost-loading"> </p>
+
+                <h5 style="margin-bottom: 2px;"> <i class="bi bi-chat-left-dots-fill text-red"></i> Comments </h5>
+
+                <form id="comment_form" style="margin-bottom: 2rem; display: none;">
+                    <textarea id="comment_box" style="width: calc(100% - 0.5rem); background-color: #f8f8f8; border-radius: 6px; border: 1px solid #c5c5c5;"></textarea>
+                    <button style="float: right; margin-top: 4px;" > Comment </button>
+                </form>
+
+                <div style="margin-left: 1rem;">
+                    <p style="background-color: #f8f8f8; padding: 0.25rem; border-radius: 6px; margin: 0px; font-size: smaller; ">
+                        Wow this is a really good place
+                    </p>
+                    <span style="float: right;">
+                        <i style="font-size: x-small; " >Patrick Malara - 2021-10-06</i>
+                    </span>
+
+                </div>
+
+
               </div>
 
-              <button onclick="modals.location.open_location_option_dropdown(event)" id="dropdown"> <i id="dropdown" class="bi bi-three-dots"></i> </button>
-
-
-              <p id="location-modal-description" style="min-height:4rem" class="ghost-loading">
-              </p>
-
-
-              <button onclick="modals.location.save_location()"> <i class="bi bi-bookmark-fill" style="color: green;"></i> </button>
+              
+              <button onclick="modals.location.save_location()" style=" position: absolute; bottom: 3rem; right: 2rem;"> 
+                  <i class="bi bi-bookmark-fill" style="color: green;"></i> 
+              </button>
 
               <div id="location_option_dropdown" class="dropdown"> 
                   <ul>
-                      <li> <i class="bi bi-hand-thumbs-up-fill"></i> Like </li>
-                      <li> <i class="bi bi-hand-thumbs-down-fill"></i> Dislike </li>
-                      <li> <i class="bi bi-flag"></i> Flag </li>
+                      <li onclick="modals.location.like_location() "> <i class="bi bi-hand-thumbs-up-fill text-blue"></i> Like </li>
+                      <li onclick="modals.location.dislike_location() "> <i class="bi bi-hand-thumbs-down-fill text-orange"></i> Dislike </li>
+                      <li onclick="modals.location.open_comment_box() "> <i class="bi bi-chat-left-dots-fill text-red"></i> Comment</li>
+                      <li> <i class="bi bi-flag-fill"></i> Flag </li>
                   </ul>
               </div>
           </article>
@@ -231,7 +264,7 @@
               <h4> Login </h4>
               <form onsubmit="modals.login_signup.attempt_login(event)">
                   <label>Email</label> <br />
-                  <input type="email id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
+                  <input type="email" id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
                   <label>Password</label> <br />
                   <input type="password" id="password" name="password" /> <br /> <br />
                   <button type="submit"> Login </button>
@@ -242,7 +275,7 @@
               <h4> Signup </h4>
               <form onsubmit="modals.login_signup.attempt_signup(event)">
                   <label>Email</label> <br />
-                  <input type="email id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
+                  <input type="email" id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
                   <label>Password</label> <br />
                   <input type="password" id="password" name="password" /> <br /> <br />
                   <button type="submit"> Create Account </button>

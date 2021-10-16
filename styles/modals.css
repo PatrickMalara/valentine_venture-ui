@@ -1,6 +1,11 @@
+@keyframes modal-open-animation {
+    from { filter: opacity(0%); }
+    to { filter: opacity(100%); }
+}
+
 .modal {
-    position: absolute;
-    background-color: rgba(50,50,50,0.4);
+    position: fixed;
+    background-color: rgba(30,30,30,0.6);
     top: 0px;
     left: 0px;
 
@@ -14,7 +19,7 @@
     justify-content: center;
     align-items: center;
 
-    transition: opacity 300ms ease;
+
 }
 
 .modal-content {
@@ -28,6 +33,12 @@
     border-radius: 6px;
 
     overflow-y: auto;
+
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+    animation-name: modal-open-animation;
+    animation-duration: 0.3s;
+
 }
 
 .modal-header {
@@ -48,3 +59,11 @@
     background-repeat: no-repeat;
 }
 
+
+
+.modal--location {
+
+    height: calc( 100vh - 2rem );
+    width: calc( 100vw - 2rem );
+    padding: 0rem !important;
+}

@@ -1,6 +1,6 @@
 //Globals
-//const socket    = io("https://valentine-venture-server.herokuapp.com/");
-const socket    = io("http://localhost:3030");
+const socket    = io("https://valentine-venture-server.herokuapp.com/");
+//const socket    = io("http://localhost:3030");
 const client    = feathers();
 
 client.configure( feathers.socketio(socket) );
@@ -11,9 +11,10 @@ client.configure(feathers.authentication({
 }));
 
 
-const the_map = L.map("map").setView([43.2557, -79.8711], 13);
+const the_map = L.map("map").fitWorld();
+the_map.setView([43.2557, -79.8711], 13);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    attribution: 'Map data &copy;',
     maxZoom: 18,
     id: 'mapbox/streets-v11',
     tileSize: 512,
