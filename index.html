@@ -20,31 +20,14 @@
     <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png"/>
 
 
-
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin="" defer></script>
-    <script src="javascript/external/feathers.js" defer></script>
-    <script src="javascript/external/socket.io.js" async ></script>
-    <script src="javascript/global.js" defer ></script>
-    <script src="javascript/app.js" defer ></script>
-    <script src="javascript/modals.js" async ></script>
-    <script src="javascript/modals/login_signup.modal.js" defer ></script>
-    <script src="javascript/modals/location.modal.js" defer ></script>
-    <script src="javascript/modals/saved_locations.modal.js" defer ></script>
-    <script src="javascript/modals/review_suggestions.modal.js" defer ></script>
-    <script src="javascript/modals/user_menu.modal.js" defer ></script>
-    <script src="javascript/modals/suggest_location.modal.js" defer ></script>
-    <script src="javascript/modals/random_location.modal.js" defer ></script>
-
     <title> Valentine Venture </title>
   </head>
   <body>
 
-          <form onsubmit="search(event)" action="" class="search-bar">
+          <form onsubmit="search(event)" class="search-bar">
               <div style="display: flex; width: 100%">
-                  <div onclick="open_login_signup_modal(event)" style="height: 24px; background: white; border: none; margin-right: 0.5rem;"/>
-                    <img src="assets/logo.png" style="height: 24px;" />
+                  <div onclick="open_login_signup_modal(event)" style="height: 24px; background: white; border: none; margin-right: 0.5rem;" >
+                    <img src="assets/logo.png" style="height: 24px;" alt="Company Logo" />
                   </div>
                   <input type="text" name="search-bar" id="search-bar" style="width: calc(100% - 3rem); "/>
               </div>
@@ -78,7 +61,7 @@
       <div id="location" class="modal " style="display: none; filter: opacity(0%);"> 
           <article class="modal-content modal--location">
               <div class="">
-                <div id="location-modal-banner" class="location-banner-img" style="min-height: 8rem; background-color: #f8f8f8;" class="ghost-loading"> </div>
+                <div id="location-modal-banner" class="location-banner-img ghost-loading" style="min-height: 8rem; background-color: #f8f8f8;"> </div>
                 <i onclick="modals.close('location') " class="bi bi-x" style="cursor: pointer; position: absolute; top: 2.5rem; right: 2rem; color: white;"> </i>
               </div>
 
@@ -319,6 +302,21 @@
 
 
 
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin="" defer></script>
+    <script src="javascript/external/feathers.js" defer ></script>
+    <script src="javascript/external/socket.io.js" defer ></script>
+    <script src="javascript/global.js" defer ></script>
+    <script src="javascript/app.js" defer ></script>
+    <script src="javascript/modals.js" defer ></script>
+    <script src="javascript/modals/login_signup.modal.js" defer ></script>
+    <script src="javascript/modals/location.modal.js" defer ></script>
+    <script src="javascript/modals/saved_locations.modal.js" defer ></script>
+    <script src="javascript/modals/review_suggestions.modal.js" defer ></script>
+    <script src="javascript/modals/user_menu.modal.js" defer ></script>
+    <script src="javascript/modals/suggest_location.modal.js" defer ></script>
+    <script src="javascript/modals/random_location.modal.js" defer ></script>
 
   </body>
 </html>

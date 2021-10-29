@@ -50,7 +50,8 @@ modals.location = {
                 }
             } ) ).data;
 
-
+        
+            // Update the Comments View
             const comment_container = document.getElementById("comment-container");
             while( comment_container.firstChild ) {
                 comment_container.removeChild( comment_container.firstChild );
@@ -64,6 +65,10 @@ modals.location = {
                 comment_el.firstElementChild.innerText = state.selected_location.comments[i].comment
                 comment_container.appendChild( comment_el );
             }
+
+           // Update the Ratings View
+           document.getElementById("like_count").innerText      = state.selected_location.ratings.filter( r => r.liked == 1 ).length;
+           document.getElementById("dislike_count").innerText   = state.selected_location.ratings.filter( r => r.liked == 0 ).length;
 
         } catch( error ) {
             console.error( error );
@@ -106,6 +111,12 @@ modals.location = {
                 user_id: state.user.id, 
                 location_id: state.selected_location.id
             } );
+
+
+            // Update the view
+            document.getElementById("like_count").innerText = state.selected_location.ratings.filter( r => r.liked == 1 ).length + 1;
+            
+
         } catch( error ) {
             console.error( error );
         }
@@ -119,6 +130,11 @@ modals.location = {
                 user_id: state.user.id, 
                 location_id: state.selected_location.id
             } );
+
+            // Update the view
+            document.getElementById("dislike_count").innerText = state.selected_location.ratings.filter( r => r.liked == 0 ).length + 1;
+            
+
         } catch( error ) {
             console.error( error );
         }
