@@ -1,6 +1,6 @@
 .search-bar {
     background-color: #FFF;
-    padding: 0.5rem;
+    padding: 0.75rem;
 
     display: flex;
     justify-content: space-between;
@@ -9,8 +9,20 @@
     top: 0px;
     left: 0px;
 
-    width: min( calc(100% - 1rem), 600px);
+    border-radius: 30px;
+
+    width: min( calc(95% - 1.5rem), 400px);
+    margin-left: 2.5%;
+    margin-top: calc( 2.5vw);
     
+    box-shadow: var(--shadow);
 
     z-index: 2000;
+}
+
+.search-input {
+    border: 1px solid #f8f8f8;
+    border-radius: 6px;
+    font-family: 'Merriweather Sans', sans-serif;
+    padding: 0px 0.5rem;
 }

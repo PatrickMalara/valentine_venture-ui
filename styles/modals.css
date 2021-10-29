@@ -34,8 +34,8 @@
 
     overflow-y: auto;
 
-    -webkit-box-shadow: 0px 0px 32px 9px rgba(0,0,0,0.8); 
-    box-shadow: 0px 0px 32px 9px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 0px 32px 9px rgba(0,0,0,0.2); 
+    box-shadow: 0px 0px 32px 9px rgba(0,0,0,0.2);
 
     animation-name: modal-open-animation;
     animation-duration: 0.3s;

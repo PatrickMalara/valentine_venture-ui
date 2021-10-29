@@ -25,8 +25,13 @@ const modals = {
 
     close: function( modal_to_close ) {
 
+       // @TODO move this to the location close method
        if ( modal_to_close === "location" ) {
             document.getElementById("comment_form").style.display = "none";
+       }
+
+       if ( "close" in this[modal_to_close] ) {
+            this[modal_to_close].close();
        }
 
        this.modal_elements[modal_to_close].style.display = "none";

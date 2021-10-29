@@ -1,6 +1,8 @@
 .preferences {
     position: absolute;
-    top: 3rem;
+    top: max(8%, 5rem);
+
+    left: 2.5%;
     z-index: 2000;
 
     display: flex;
