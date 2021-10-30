@@ -22,7 +22,7 @@ modals.login_signup = {
             state.user = {
                 id: response.user.id,
                 email: response.user.email,
-                is_admin: response.is_admin ? true : false
+                is_admin: response.is_admin == 1 ? true : false
             }
 
             console.debug( response );

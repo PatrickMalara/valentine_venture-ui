@@ -23,7 +23,23 @@ modals.user_menu = {
                 () => { modals.open("review_suggestions"); }
             );
 
+            const generate_charts_btn = document.createElement("button");
+            generate_charts_btn.innerText = "Generate Charts";
+            generate_charts_btn.addEventListener(
+                "click",
+                () => { modals.open("generate_charts"); }
+            );
+
+            const view_flagged_btn = document.createElement("button");
+            view_flagged_btn.innerText = "View Flagged Locations";
+            view_flagged_btn.addEventListener(
+                "click",
+                () => { modals.open("review_suggestions"); }
+            );
+
             user_menu_el.appendChild( review_suggestions_btn );
+            user_menu_el.appendChild( generate_charts_btn );
+            user_menu_el.appendChild( view_flagged_btn );
         }
         else {
             const suggest_location_btn = document.createElement("button");
