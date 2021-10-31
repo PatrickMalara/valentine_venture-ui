@@ -34,7 +34,7 @@ modals.user_menu = {
             view_flagged_btn.innerText = "View Flagged Locations";
             view_flagged_btn.addEventListener(
                 "click",
-                () => { modals.open("review_suggestions"); }
+                () => { modals.open("flagged_locations"); }
             );
 
             user_menu_el.appendChild( review_suggestions_btn );

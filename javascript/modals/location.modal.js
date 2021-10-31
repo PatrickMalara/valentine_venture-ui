@@ -116,6 +116,7 @@ modals.location = {
             // Update the view
             document.getElementById("like_count").innerText = state.selected_location.ratings.filter( r => r.liked == 1 ).length + 1;
             
+            notify("Liked!", "good" );
 
         } catch( error ) {
             console.error( error );
@@ -134,6 +135,7 @@ modals.location = {
             // Update the view
             document.getElementById("dislike_count").innerText = state.selected_location.ratings.filter( r => r.liked == 0 ).length + 1;
             
+            notify("Disliked!", "good" );
 
         } catch( error ) {
             console.error( error );
@@ -178,6 +180,7 @@ modals.location = {
             document.getElementById("comment_form").style.display = "none";
             event.target["0"].value = "";
             
+            notify("Commented!", "good" );
 
         } catch(error) {
             console.error(error);

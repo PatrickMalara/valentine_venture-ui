@@ -22,6 +22,8 @@ const state = {
 
 };
 
+const notification = document.getElementById("notification");
+
 
 // Slighty confusing, and I might change this. But on the UI, i call categories "preferences"
 function toggle_preference( cat_name ) {
@@ -44,43 +46,20 @@ function toggle_preference( cat_name ) {
 }
 
 /*
-async function load_location_modal_contents( lat, lng ) {
-    
-    try {
-        let response = await client.service("locations").find( { 
-            query: {
-                latitude: lat,
-                longitude: lng
-            } 
-        } );
+ * message - Text
+ * emotion - ["good", "bad"] :Text
+ * */
+function notify( message, emotion ) { 
+    notification.innerText = message;
+    notification.classList.add(`notify-${emotion}`);
 
+    setTimeout( function() {
+        notification.classList.remove(`notify-${emotion}`);
 
-       if ( response.data.length === 0 ) {
-         throw new Error("No Location found with that latitude and longitude");
-       }
-
-        state.selected_location = response.data[0];
-
-        // Update the contents of the Modal
-        const name_el   = document.getElementById("location-modal-name");
-        name_el.innerText = state.selected_location.name;
-        name_el.classList.remove("ghost-loading");
-
-        const cover_el  = document.getElementById("location-modal-banner")
-        cover_el.style.backgroundImage = `url('${state.selected_location.cover_img_url}') `;
-        cover_el.classList.remove("ghost-loading");
-
-        const desc_el   = document.getElementById("location-modal-description")
-        desc_el.innerText = state.selected_location.description;
-        desc_el.classList.remove("ghost-loading");
-
-
-    } catch( error ) {
-        console.error( error );
-    }
-
+        notification.classList.add("notify-close"); // Animation will last a hardcoded value, make sure timeout matches the classes animation length
+        //notification.classList.remove("notify-close");
+    }, 3000)
 }
-*/
 
 
 function open_login_signup_modal(event) {
@@ -166,6 +145,7 @@ function create_category(event) {
 
 
 async function search( event ) {
+
     
     if( event !== undefined ) { 
         event.preventDefault(); 

@@ -55,10 +55,12 @@
 
 
         <section class="bottom-right-buttons">
-            <button id="btn-random-location" onclick="modals.open('random_location')"> <i class="bi bi-dice-5-fill"></i> </button>
-            <button id="btn-saved-locations" onclick="modals.open('saved_locations')" > <i class="bi bi-bookmark-fill"></i> </button>
+            <button id="btn-random-location" class="btn-random-location" onclick="modals.open('random_location')"> <i class="bi bi-dice-5-fill"></i> </button>
+            <button id="btn-saved-locations" class="btn-saved-locations" onclick="modals.open('saved_locations')" > <i class="bi bi-bookmark-fill"></i> </button>
         </section>
 
+
+        <div id="notification" class="notification"></div>
 
 
         <!-- Below are the Modals -->        
@@ -117,7 +119,7 @@
               </div>
 
               
-              <button onclick="modals.location.save_location()" style=" position: absolute; bottom: 3rem; right: 2rem;"> 
+              <button onclick="modals.location.save_location()" class="btn-saved-locations" style="position: absolute; bottom: 3rem; right: 2rem;"> 
                   <i class="bi bi-bookmark-fill" style="color: green;"></i> 
               </button>
 
@@ -162,6 +164,25 @@
                   <button style="margin: 1rem 0rem;" onclick="modals.flagging.flag(2) " > Missing Content </button>
                   <button onclick="modals.flagging.flag(3) " > Old Content </button>
               <div>
+
+          </article>
+      </div>
+
+
+        <div id="flagged_locations" class="modal" style="display: none; filter: opacity(0%);"> 
+          <article class="modal-content" style="height: auto;">
+              <div class="modal-header">
+                  <h3> <i class="bi-flag-fill"></i> Flagged Locations  </h3>
+                <i onclick="modals.close('flagged_locations') " class="bi bi-x" style="cursor: pointer;"> </i>
+              </div>
+
+              <div id="flagged_list" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 1rem;">
+              <div>
+              <template id="template-flagged-item">
+                  <div> 
+                      <i class="bi bi-geo-alt-fill"> </i> <span>Location Name</span> 
+                  </div>
+              </template>
 
           </article>
       </div>
@@ -358,6 +379,7 @@
     <script src="javascript/modals/generate_charts.modal.js" defer ></script>
     <script src="javascript/modals/suggest_location.modal.js" defer ></script>
     <script src="javascript/modals/flagging.modal.js" defer ></script>
+    <script src="javascript/modals/flagged_locations.modal.js" defer ></script>
     <script src="javascript/modals/random_location.modal.js" defer ></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js" async > </script>

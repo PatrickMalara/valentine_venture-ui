@@ -59,7 +59,7 @@ html, body {
     z-index: 2000;
 }
 
-#btn-saved-locations {
+.btn-saved-locations {
     color: green;
 
     width: 3rem;
@@ -71,7 +71,7 @@ html, body {
 
 }
 
-#btn-random-location {
+.btn-random-location {
     color: purple;
     margin-right: 0.5rem;
 
@@ -124,3 +124,52 @@ button {
     padding: 4px 2px;
     cursor: pointer;
 }
+
+
+@keyframes notification-on-animation{
+    0%{ filter: opacity(0%); }
+    15%{ filter: opacity(100%); }
+    75%{ filter: opacity(100%); bottom: 2.5rem;}
+    100% { filter: opacity(0%); bottom: 3rem;}
+}
+
+
+.notify-good {
+    display: block !important;
+    color: white !important;
+    background-color: indianred !important;
+
+    animation-name: notification-on-animation;
+    animation-duration: 3s;
+    transition-timing-function: linear;
+}
+.notify-bad {
+    display: block !important;
+    color: white !important;
+    background-color: #333 !important;
+
+    animation-name: notification-on-animation;
+    animation-duration: 3s;
+    transition-timing-function: linear;
+}
+.notification {
+    bottom: 2.5rem;
+    right: 2rem;
+    display: none;
+    position: absolute;
+
+    padding: .75rem 1.75rem;
+    border-radius: 6px;
+
+    z-index: 2001;
+
+    background-color: transparent;
+    color: transparent;
+
+    transition: background-color 1s ease-in-out, color 1s ease-in-out;
+
+    box-shadow: var(--shadow);
+}
+
+
+
