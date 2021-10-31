@@ -103,8 +103,6 @@ button {
 
 
 .dropdown {
-    top: 0;
-    left: 0;
     background-color: #FFF;
     position: absolute;
     border-radius: 6px;
@@ -112,6 +110,11 @@ button {
     display: none;
     width: 100px;
     border: 1px solid #c5c5c5;
+
+    text-align: left;
+
+    margin-top: -2rem;
+    margin-left: -62px;
 
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
@@ -133,6 +136,19 @@ button {
     100% { filter: opacity(0%); bottom: 3rem;}
 }
 
+#user-menu-content > button {
+   margin: 0.5rem 0rem; 
+}
+
+
+#location .bi-x {
+    background-color: rgba(0,0,0,0.6);
+    padding: 0px 2px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: var(--shadow);
+
+}
 
 .notify-good {
     display: block !important;
@@ -172,4 +188,37 @@ button {
 }
 
 
+@media only screen and (min-width: 600px) {
 
+    .search-bar { 
+        top: 1rem !important;
+        left: 1rem !important;
+        margin: 0px !important;
+    }
+
+    .modal {
+        top: 7.5rem !important;
+        left: 1rem !important;
+
+        max-width: 425px;
+        position: absolute !important;
+        justify-content: start !important;
+        background-color: transparent !important;
+        height: auto !important;
+        max-height: min(100vh - 8rem );
+    }
+
+    .modal--location {
+        height: calc(100vh - 9rem ) !important; /* +1rem for bottom margin */
+    }
+
+    .modal--location .bi-x {
+        top: 1rem !important;
+        right: 1rem !important;
+    }
+
+    .preferences {
+        top: 5rem !important;
+        left: 1rem !important;
+    }
+}

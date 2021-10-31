@@ -56,7 +56,7 @@
 
         <section class="bottom-right-buttons">
             <button id="btn-random-location" class="btn-random-location" onclick="modals.open('random_location')"> <i class="bi bi-dice-5-fill"></i> </button>
-            <button id="btn-saved-locations" class="btn-saved-locations" onclick="modals.open('saved_locations')" > <i class="bi bi-bookmark-fill"></i> </button>
+            <button id="btn-saved-locations" class="btn-saved-locations" onclick="modals.open('saved_locations')" > <i class="bi bi-bookmark-star-fill"></i> </button>
         </section>
 
 
@@ -77,9 +77,20 @@
                     <h3 id="location-modal-name" class="ghost-loading" style="margin: 2px;"> </h3>
 
                     <div style="text-align: right;">
-                        <button onclick="modals.location.open_location_option_dropdown(event)" id="dropdown"> 
-                            <i id="dropdown" class="bi bi-three-dots"></i> 
-                        </button>
+                        <div>
+                            <button onclick="modals.location.open_location_option_dropdown(event)" id="dropdown"> 
+                                <i id="dropdown" class="bi bi-three-dots"></i> 
+                            </button>
+                            <div id="location_option_dropdown" class="dropdown"> 
+                              <ul>
+                                  <li onclick="modals.location.like_location() "> <i class="bi bi-hand-thumbs-up-fill text-blue"></i> Like </li>
+                                  <li onclick="modals.location.dislike_location() "> <i class="bi bi-hand-thumbs-down-fill text-orange"></i> Dislike </li>
+                                  <li onclick="modals.location.open_comment_box() "> <i class="bi bi-chat-left-dots-fill text-red"></i> Comment</li>
+                                  <li onclick="modals.open('flagging') "> <i class="bi bi-flag-fill"></i> Flag </li>
+                              </ul>
+                            </div>
+                        </div>
+
                         <br>
                         <div style="white-space: nowrap;">
                             <span style="font-size: x-small;" class="text-blue">
@@ -120,17 +131,9 @@
 
               
               <button onclick="modals.location.save_location()" class="btn-saved-locations" style="position: absolute; bottom: 3rem; right: 2rem;"> 
-                  <i class="bi bi-bookmark-fill" style="color: green;"></i> 
+                  <i class="bi bi-bookmark-star-fill" style="color: green;"></i> 
               </button>
 
-              <div id="location_option_dropdown" class="dropdown"> 
-                  <ul>
-                      <li onclick="modals.location.like_location() "> <i class="bi bi-hand-thumbs-up-fill text-blue"></i> Like </li>
-                      <li onclick="modals.location.dislike_location() "> <i class="bi bi-hand-thumbs-down-fill text-orange"></i> Dislike </li>
-                      <li onclick="modals.location.open_comment_box() "> <i class="bi bi-chat-left-dots-fill text-red"></i> Comment</li>
-                      <li onclick="modals.open('flagging') "> <i class="bi bi-flag-fill"></i> Flag </li>
-                  </ul>
-              </div>
           </article>
       </div>
 
@@ -210,7 +213,7 @@
       <div id="saved_locations" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
-                  <h3> <i class="bi-bookmark-fill" style="color: green;" ></i> Saved Locations</h3>
+                  <h3> <i class="bi-bookmark-star-fill" style="color: green;" ></i> Saved Locations</h3>
                 <i onclick="modals.close('saved_locations') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
@@ -244,7 +247,7 @@
                 <i onclick="modals.close('user_menu') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <div id="user-menu-content">
+              <div id="user-menu-content" style="display: flex; flex-direction: column; align-items: center; margin-top: 1rem;">
                   <button onclick=" modals.open('suggest-location') "> 
                       <i class="bi bi-lightbulb "></i> Suggest a Location 
                   </button>

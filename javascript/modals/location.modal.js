@@ -11,6 +11,8 @@ modals.location = {
 
             console.log("Yay, location saved!");
 
+            notify("Saved!", "good");
+
         } catch(error) {
             console.error("Failed to save Location: ", error);
         }
@@ -98,9 +100,6 @@ modals.location = {
         const dropdown_el = document.getElementById("location_option_dropdown");
 
         dropdown_el.style.display = "block";
-        dropdown_el.style.left = (event.clientX - 100) + "px";
-        dropdown_el.style.top = (event.clientY - 15) + "px";
-
         window.addEventListener( "click", modals.location.dropdown_click_listener );
     },
 
