@@ -208,6 +208,11 @@ button {
         max-height: min(100vh - 8rem );
     }
 
+    .modal-content {
+        box-shadow: var(--shadow) !important;
+    }
+
+
     .modal--location {
         height: calc(100vh - 9rem ) !important; /* +1rem for bottom margin */
     }

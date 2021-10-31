@@ -26,9 +26,71 @@ const mapquest_url = "http://open.mapquestapi.com/geocoding/v1/address?key=bbvn8
 
 
 //  Custom Icon for Markers
+
 var heartMarker = L.icon({
     iconUrl: 'assets/vv-marker.png',
     iconSize: [32, 42],
+    iconAnchor: [0, 42],
+    popupAnchor: [0, -42],/*
+    shadowUrl: 'assets/vv-marker-shadow.png',
+    shadowSize: [68, 95],
+    shadowAnchor: [22, 94] */
+});
+
+var outdoorsMarker = L.icon({
+    iconUrl: 'assets/vv-outdoorsmarker.png',
+    iconSize: [26, 34],
+    iconAnchor: [0, 42],
+    popupAnchor: [0, -42],/*
+    shadowUrl: 'assets/vv-marker-shadow.png',
+    shadowSize: [68, 95],
+    shadowAnchor: [22, 94] */
+});
+
+var artMarker = L.icon({
+    iconUrl: 'assets/vv-artmarker.png',
+    iconSize: [26, 34],
+    iconAnchor: [0, 42],
+    popupAnchor: [0, -42],/*
+    shadowUrl: 'assets/vv-marker-shadow.png',
+    shadowSize: [68, 95],
+    shadowAnchor: [22, 94] */
+});
+
+var drinkingMarker = L.icon({
+    iconUrl: 'assets/vv-drinkingmarker.png',
+    iconSize: [26, 34],
+    iconAnchor: [0, 42],
+    popupAnchor: [0, -42],/*
+    shadowUrl: 'assets/vv-marker-shadow.png',
+    shadowSize: [68, 95],
+    shadowAnchor: [22, 94] */
+});
+
+var eatingMarker = L.icon({
+    iconUrl: 'assets/vv-foodmarker.png',
+    iconSize: [26, 34],
+    iconAnchor: [0, 42],
+    popupAnchor: [0, -42],/*
+    shadowUrl: 'assets/vv-marker-shadow.png',
+    shadowSize: [68, 95],
+    shadowAnchor: [22, 94] */
+});
+
+var gamesMarker = L.icon({
+    iconUrl: 'assets/vv-gamemarker.png',
+    iconSize: [26, 34],
+    iconAnchor: [0, 42],
+    popupAnchor: [0, -42],/*
+    shadowUrl: 'assets/vv-marker-shadow.png',
+    shadowSize: [68, 95],
+    shadowAnchor: [22, 94] */
+});
+
+
+var animalsMarker = L.icon({
+    iconUrl: 'assets/vv-animalsmarker.png',
+    iconSize: [26, 34],
     iconAnchor: [0, 42],
     popupAnchor: [0, -42],/*
     shadowUrl: 'assets/vv-marker-shadow.png',

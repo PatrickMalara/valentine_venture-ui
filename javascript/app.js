@@ -179,8 +179,24 @@ async function search( event ) {
         }
 
         state.locations_array = response.data;
+        let icon = { icon: heartMarker };
         for( let i = 0; i < response.data.length; i += 1 ) {        // @TODO use Object Pooling
-            const marker = L.marker([ response.data[i].latitude, response.data[i].longitude ], { icon: heartMarker })
+
+            if ( response.data[i].main_category_id == 1 ) {
+                icon.icon = outdoorsMarker;
+            } else if ( response.data[i].main_category_id == 2 ) {
+                icon.icon = artMarker;
+            } else if ( response.data[i].main_category_id == 3 ) {
+                icon.icon = eatingMarker;
+            } else if ( response.data[i].main_category_id == 4 ) {
+                icon.icon = drinkingMarker;
+            } else if ( response.data[i].main_category_id == 5 ) {
+                icon.icon = gamesMarker;
+            } else if ( response.data[i].main_category_id == 6 ) {
+                icon.icon = animalsMarker;
+            }
+
+            const marker = L.marker([ response.data[i].latitude, response.data[i].longitude ], icon )
 
             state.map_markers.push( marker );
 
