@@ -213,6 +213,8 @@ async function search( event ) {
             marker.addTo(the_map);
         }
 
+        notify( `${state.locations_array.length} Results!`, "good");
+
     } catch(error) {
         console.error( error ); 
     }

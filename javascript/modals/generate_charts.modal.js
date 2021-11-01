@@ -1,7 +1,19 @@
 modals.generate_charts = {
-    init: async function() {
-        console.log("Hello We are generating Charts ");
 
+    ctx: document.getElementById('generated_chart').getContext('2d'),
+    screen: "categories",
+
+    set_screen: function( screen_name ) {
+        if ( screen_name === "ratings" ) {
+            
+        } else if ( screen_name === "categories" ) {
+
+        } else if ( screen_name === "Something else") {
+
+        }
+    }
+
+    init: async function() {
 
     /*
      * We Intially Load the Categories Chart
@@ -21,8 +33,6 @@ modals.generate_charts = {
         const games_count = response.data.filter( loc => loc.main_category_id === 5).length
         const animals_count = response.data.filter( loc => loc.main_category_id === 6).length
 
-
-        const ctx = document.getElementById('generated_chart').getContext('2d');
         const the_chart = new Chart(ctx, {
             type: 'pie',
             data: {
