@@ -1,5 +1,13 @@
 # valentine_venture-ui
-### This is my capstone project for Mohawk College. Still in the middle of it, meaning everything here is still a work in progress.
+### Capstone Project for Mohawk College. Work in Progress.
+
+![Under Construction](https://www.cameronsworld.net/img/content/22/1.gif)
+
+* Technologies
+  * Vanilla Javascript
+  * Node.js
+  * Leaflet Maps
+  * Open Map
 
 ![Screenshot of Valentine Venture on Desktop](https://patrickmalara.com/wp-content/uploads/2021/11/image-1024x673.png)
 
