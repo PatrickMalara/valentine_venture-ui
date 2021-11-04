@@ -1,5 +1,6 @@
 # valentine_venture-ui
-### Capstone Project for Mohawk College. Work in Progress.
+### Capstone Project for Mohawk College. Work in Progress. [Link to Deployment](http://valentineventure.ca/)
+__*note:__ the node.js server is on heroku which has long cold starts... so you may need to refresh to page to have locations loaded 
 
 ![Under Construction](https://www.cameronsworld.net/img/content/22/1.gif)
 
