@@ -116,7 +116,7 @@ button {
     width: 100%;
 }
 
-form {
+#login_signup form {
     margin-left: -1rem;
     width: 70%;
 }

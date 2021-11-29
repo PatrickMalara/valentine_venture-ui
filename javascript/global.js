@@ -21,8 +21,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoicGF0cmlja21hbGFyYWRldmVsb3BlciIsImEiOiJja3RhdG9sNWoxcHhsMnBucmN2dDBsajh2In0.SyHhgEOXvWgrBEYCEc3uAA',
 }).addTo( the_map );
 
-const mapquest_url = "http://open.mapquestapi.com/geocoding/v1/address?key=bbvn8lIzHUQYMVAUp3TFOsK4aQl02PEG";
-//&boundingBox=43.3761068333526,-80.01467127854438,43.076913126087135,-79.67581527190661 
+const geolocoder_url = "https://maps.googleapis.com/maps/api/geocode/json?key=";
 
 
 //  Custom Icon for Markers

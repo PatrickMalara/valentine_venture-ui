@@ -53,12 +53,12 @@ modals.suggest_location = {
 
                         let response = undefined;
                         try {
-                            response = await fetch(`${mapquest_url}&location=${address_to_lookup}, ON, Canada`);
+                            response = await fetch(`${geolocoder_url}&address=${address_to_lookup}&region=CA`);
                             response = await response.json();
 
                             console.debug( response );
 
-                            if ( response.info.statuscode != 0 ) {
+                            if ( response.status != "OK" ) {
                                 // If there was an error calculating the Latitude and Longitude, just return.
                                 return;
                             }
@@ -67,24 +67,24 @@ modals.suggest_location = {
                             if ( self.marker === undefined ) {
                                 self.marker = L.marker(
                                     [ 
-                                        response.results[0].locations[0].latLng.lat, 
-                                        response.results[0].locations[0].latLng.lng
+                                        response.results[0].geometry.location.lat, 
+                                        response.results[0].geometry.location.lng, 
                                     ], { draggable: true, icon: heartMarker });
 
                                 self.marker.addTo( self.map );
 
                             } else { 
                                 self.marker.setLatLng( L.latLng(
-                                    response.results[0].locations[0].latLng.lat,
-                                    response.results[0].locations[0].latLng.lng
+                                    response.results[0].geometry.location.lat, 
+                                    response.results[0].geometry.location.lng, 
                                 ) );
                             }
                             
 
                             self.map.flyTo(
                                 [
-                                    response.results[0].locations[0].latLng.lat, 
-                                    response.results[0].locations[0].latLng.lng
+                                    response.results[0].geometry.location.lat, 
+                                    response.results[0].geometry.location.lng, 
                                 ], 16);
 
 
@@ -96,6 +96,33 @@ modals.suggest_location = {
                 , 500, self );
             }
         );
+    },
+
+    create_suggestion_record: async function (event) {
+        event.preventDefault();
+        const suggestion_name           = event.target["suggestion-name"].value.trim();
+        const suggestion_description    = event.target["suggestion-description"].value.trim();
+        const suggestion_category       = event.target["suggestion-category"].value.trim();
+        const suggestion_address        = event.target["suggestion-address"].value.trim();
+
+        try {
+            await client.service("suggestions").create( {
+                user_id:            state.user.id,
+                name:               suggestion_name,
+                description:        suggestion_description,
+                address:            suggestion_address,
+                latitude:           this.marker.getLatLng().lat,
+                longitude:          this.marker.getLatLng().lng,
+                main_category_id:   suggestion_category
+            } );
+
+            notify( `Suggestion Created!`, "good");
+            modals.open("user_menu");
+
+        } catch( error ) {
+            notify( `Suggestion failed to be made`, "bad");
+            console.error("Failed to create the suggestion. Error: ", error);
+        }
     }
 
 };

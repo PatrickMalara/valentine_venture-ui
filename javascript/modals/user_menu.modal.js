@@ -58,6 +58,7 @@ modals.user_menu = {
         logout_btn.addEventListener(
             "click",
             () => { 
+                state.user = undefined;
                 sessionStorage.clear();
                 localStorage.clear();
                 modals.open("login_signup");

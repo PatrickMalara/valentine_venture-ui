@@ -110,31 +110,6 @@ async function create_location_record(event) {
 }
 
 
-async function create_suggestion_record(event) {
-    event.preventDefault();
-    const suggestion_name           = event.target["suggestion-name"].value.trim();
-    const suggestion_description    = event.target["suggestion-description"].value.trim();
-    const suggestion_category       = event.target["suggestion-category"].value.trim();
-    const suggestion_address        = event.target["suggestion-address"].value.trim();
-
-
-    try {
-        await client.service("suggestions").create( {
-            user_id:            state.user.id,
-            name:               suggestion_name,
-            description:        suggestion_description,
-            address:            suggestion_address,
-            latitude:           modals.suggest_location_state.marker.getLatLng().lat,
-            longitude:          modals.suggest_location_state.marker.getLatLng().lng,
-            main_category_id:   suggestion_category
-        } );
-
-    } catch( error ) {
-        console.error("Failed to create the suggestion. Error: ", error);
-    }
-}
-
-
 // Malara helper function
 function create_category(event) {
     event.preventDefault();
