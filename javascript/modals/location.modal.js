@@ -16,8 +16,6 @@ modals.location = {
                 location_id:    state.selected_location.id 
             } );
 
-            console.log("Yay, location saved!");
-
             notify("Saved!", "good");
 
         } catch(error) {
@@ -124,8 +122,30 @@ modals.location = {
 
         const dropdown_el = document.getElementById("location_option_dropdown");
 
+        if ( state.user.is_admin == true ) {
+            const delete_location_option = document.createElement("li");
+            delete_location_option.innerHTML = `
+                <i class="bi bi-trash-fill text-red"></i> Delete </li>
+            `;
+
+            delete_location_option.addEventListener( "click", modals.location.delete_location );
+
+            dropdown_el.firstElementChild.appendChild( delete_location_option );
+        }
+
         dropdown_el.style.display = "block";
         window.addEventListener( "click", modals.location.dropdown_click_listener );
+    },
+
+    delete_location: async function() {
+       try {
+            await client.service("locations").remove( state.selected_location.id );
+            notify("Deleted!", "good" );
+            modals.open("user_menu");
+
+       } catch(error) { 
+            notify("Failed to delete location", "bad" );
+       }
     },
 
     like_location: async function() {
