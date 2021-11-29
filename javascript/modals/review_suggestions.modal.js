@@ -128,25 +128,38 @@ modals.review_suggestions = {
 
                             let response = undefined;
                             try {
-                                response = await fetch(`${mapquest_url}&location=${address_to_lookup}, ON, Canada`);
+                                response = await fetch(`${geolocoder_url}&address=${address_to_lookup}&region=CA`);
                                 response = await response.json();
 
                                 console.debug( response );
 
-                                if ( response.info.statuscode != 0 ) {
+                                if ( response.status != "OK" ) {
                                     // If there was an error calculating the Latitude and Longitude, just return.
                                     return;
                                 }
 
-                                self.marker.setLatLng( L.latLng(
-                                    response.results[0].locations[0].latLng.lat,
-                                    response.results[0].locations[0].latLng.lng
-                                ) );
+
+                                if ( self.marker === undefined ) {
+                                    self.marker = L.marker(
+                                        [ 
+                                            response.results[0].geometry.location.lat, 
+                                            response.results[0].geometry.location.lng, 
+                                        ], { draggable: true, icon: heartMarker });
+
+                                    self.marker.addTo( self.map );
+
+                                } else { 
+                                    self.marker.setLatLng( L.latLng(
+                                        response.results[0].geometry.location.lat, 
+                                        response.results[0].geometry.location.lng, 
+                                    ) );
+                                }
+                                
 
                                 self.map.flyTo(
                                     [
-                                        response.results[0].locations[0].latLng.lat, 
-                                        response.results[0].locations[0].latLng.lng
+                                        response.results[0].geometry.location.lat, 
+                                        response.results[0].geometry.location.lng, 
                                     ], 16);
 
 
@@ -165,5 +178,41 @@ modals.review_suggestions = {
         }
 
 
+    },
+
+
+    create_location_record: async function (event) {
+        event.preventDefault();
+        const review_name           = event.target["review-name"].value.trim();
+        const review_description    = event.target["review-description"].value.trim();
+        const review_category       = event.target["review-category"].value.trim();
+        const review_address        = event.target["review-address"].value.trim();
+        const review_banner         = event.target["review-banner"].value.trim();
+        const review_website        = event.target["review-website"].value.trim();
+
+        try {
+            await client.service("locations").create( {
+                name:               review_name,
+                description:        review_description,
+                address:            review_address,
+                website_url:        review_website,
+                cover_img_url:      review_banner,
+                latitude:           this.marker.getLatLng().lat,
+                longitude:          this.marker.getLatLng().lng,
+                main_category_id:   review_category
+            } );
+
+            const index = this.curr_index;
+
+            await client.service("suggestions").remove( this.suggestions_array[ index ].id );
+            this.suggestions_array.splice( index, 1 );
+            this.set_review_index_and_render_suggestion( 0 );
+
+            notify( `Location Created!`, "good");
+
+        } catch( error ) {
+            notify( `Location failed to be made`, "bad");
+            console.error("Failed to create the suggestion. Error: ", error);
+        }
     }
 };

@@ -76,39 +76,6 @@ function open_login_signup_modal(event) {
 }
 
 
-async function create_location_record(event) {
-    event.preventDefault();
-    const review_name           = event.target["review-name"].value.trim();
-    const review_description    = event.target["review-description"].value.trim();
-    const review_category       = event.target["review-category"].value.trim();
-    const review_address        = event.target["review-address"].value.trim();
-    const review_banner         = event.target["review-banner"].value.trim();
-    const review_website        = event.target["review-website"].value.trim();
-
-    try {
-        await client.service("locations").create( {
-            name:               review_name,
-            description:        review_description,
-            address:            review_address,
-            website_url:        review_website,
-            cover_img_url:      review_banner,
-            latitude:           modals.review_suggestion.marker.getLatLng().lat,
-            longitude:          modals.review_suggestion.marker.getLatLng().lng,
-            main_category_id:   review_category
-        } );
-
-        const index = modals.review_suggestion.curr_index;
-
-        await client.service("suggestion").remove( modals.review_suggestion.suggestions_array[ index ].id );
-        modals.review_suggestion.suggestions_array.splice( index, 1 );
-        modals.set_review_index_and_render_suggestion( 0 );
-
-
-    } catch( error ) {
-        console.error("Failed to create the suggestion. Error: ", error);
-    }
-}
-
 
 // Malara helper function
 function create_category(event) {

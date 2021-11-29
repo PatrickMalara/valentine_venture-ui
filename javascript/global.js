@@ -21,7 +21,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoicGF0cmlja21hbGFyYWRldmVsb3BlciIsImEiOiJja3RhdG9sNWoxcHhsMnBucmN2dDBsajh2In0.SyHhgEOXvWgrBEYCEc3uAA',
 }).addTo( the_map );
 
-const geolocoder_url = "https://maps.googleapis.com/maps/api/geocode/json?key=";
+const geolocoder_url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDPdS-vxRHXOrrVOVZfwEbp99pzHCmop-o";
 
 
 //  Custom Icon for Markers

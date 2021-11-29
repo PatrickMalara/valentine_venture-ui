@@ -230,6 +230,7 @@ button {
 
     .modal-content {
         box-shadow: var(--shadow) !important;
+        max-height: calc( 100vh - 10rem ) !important;
     }
 
 

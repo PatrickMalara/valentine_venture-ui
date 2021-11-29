@@ -24,6 +24,7 @@
     <link rel="shortcut icon" type="image/png" href="assets/favicon/favicon"/>
     <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png"/>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js" async > </script>
 
     <title> Valentine Venture </title>
   </head>
@@ -300,23 +301,26 @@
                 <i onclick="modals.close('review_suggestions') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <button onclick="modals.review_suggestions.previous_suggestion()" > <i class="bi bi-chevron-left"></i> </button>
-              <button onclick="modals.review_suggestions.next_suggestion()"> <i class="bi bi-chevron-right"></i> </button>
+              <div style="display: flex; justify-content: space-between;">
+                  <button onclick="modals.review_suggestions.previous_suggestion()" > <i class="bi bi-chevron-left"></i> </button>
+                  <button onclick="modals.review_suggestions.next_suggestion()"> <i class="bi bi-chevron-right"></i> </button>
+              </div>
               <br />
-              <button onclick="modals.review_suggestions.delete_curr_suggestion()"> Decline Suggestion </button>
+              <button onclick="modals.review_suggestions.delete_curr_suggestion()" class="text-red" style="float: right;"> Decline Suggestion </button>
+              <br />
 
-              <form onsubmit="create_location_record(event)" > 
+              <form onsubmit="modals.review_suggestions.create_location_record(event)" style="width: 96%;"> 
                     <label> Location Name</label> <br />
-                    <input type="text" id="review-name" name="name" class="review-form-el" required> <br /> <br />
+                    <input type="text" id="review-name" name="name" class="review-form-el input-text" required> <br /> <br />
 
                     <label> Description</label> <br />
-                    <input type="text" id="review-description" name="description" class="review-form-el" required > <br /> <br />
+                    <input type="text" id="review-description" name="description" class="review-form-el input-text" required > <br /> <br />
 
                     <label> Website </label> <br />
-                    <input type="text" id="review-website" name="website" class="review-form-el"> <br /> <br />
+                    <input type="text" id="review-website" name="website" class="review-form-el input-text" > <br /> <br />
 
                     <label> Banner Img </label> <br />
-                    <input type="text" id="review-banner" name="banner" class="review-form-el"> <br /> <br />
+                    <input type="text" id="review-banner" name="banner" class="review-form-el input-text"> <br /> <br />
 
     
                     <label> Main Category </label> <br />
@@ -328,7 +332,7 @@
                     </select><br /> <br /> -->
 
                     <label> Street Address *<i style=" font-size: small; color: lightgray;">Drag the marker to be more precise</i> </label> <br />
-                    <input type="text" id="review-address" name="address" class="review-form-el" required > <br /> <br />
+                    <input type="text" id="review-address" name="address" class="review-form-el input-text" required > <br /> <br />
 
                     <div id="review-map" style=" width: 100%; height: 280px; "> </div> <br />
 
@@ -400,7 +404,6 @@
     <script src="javascript/modals/flagged_locations.modal.js" defer ></script>
     <script src="javascript/modals/random_location.modal.js" defer ></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js" async > </script>
 
   </body>
 </html>
