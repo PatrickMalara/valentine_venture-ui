@@ -3,6 +3,13 @@ modals.location = {
     is_dropdown_open: false,
 
     save_location: async function() {
+
+        if ( state.user === undefined ) {  
+            notify("You must be logged in to use this feature.", "bad");
+            modals.open("login_signup");
+            return;
+        }
+
         try {
             const response = await client.service("saved-locations").create( {
                 user_id:        state.user.id,
@@ -39,6 +46,12 @@ modals.location = {
             desc_el.innerText = state.selected_location.description;
             desc_el.classList.remove("ghost-loading");
 
+            const address_el   = document.getElementById("location-modal-address")
+            address_el.innerText = state.selected_location.address;
+            address_el.classList.remove("ghost-loading");
+
+
+
             
             state.selected_location["comments"] = ( await client.service("comments").find( { 
                 query: {
@@ -62,9 +75,15 @@ modals.location = {
             const comment_template = document.getElementById("template-comment").content.firstElementChild.cloneNode(true);
             let i = 0;
             const length = state.selected_location.comments.length;
+            let comment = undefined;
             for( i = 0; i < length; i += 1 ) {
+                comment = state.selected_location.comments[i];
                 comment_el  = comment_template.cloneNode(true);
-                comment_el.firstElementChild.innerText = state.selected_location.comments[i].comment
+                comment_el.firstElementChild.innerText = comment.comment
+                
+                // The commentors First and Last Name + Date
+                comment_el.lastElementChild.firstElementChild.innerText = `${comment.first_name} ${comment.last_name} - ${comment.created_on}`;
+
                 comment_container.appendChild( comment_el );
             }
 
@@ -96,7 +115,13 @@ modals.location = {
     },
 
     open_location_option_dropdown: function(event) {
-        console.debug(event);
+
+        if ( state.user === undefined ) {  
+            notify("You must be logged in to use this feature.", "bad");
+            modals.open("login_signup");
+            return;
+        }
+
         const dropdown_el = document.getElementById("location_option_dropdown");
 
         dropdown_el.style.display = "block";
@@ -163,7 +188,7 @@ modals.location = {
         if ( comment_text.trim() === "" ) { return; } // Dont comment empty string
 
         try { 
-            await client.service( "comments" ).create( {
+            const our_comment = await client.service( "comments" ).create( {
                 user_id:        state.user.id,
                 location_id:    state.selected_location.id,
                 comment:        comment_text.trim()
@@ -173,6 +198,10 @@ modals.location = {
             const comment_template = document.getElementById("template-comment").content.firstElementChild.cloneNode(true);
             const comment_el = comment_template.cloneNode(true);
             comment_el.firstElementChild.innerText = comment_text.trim();
+            
+            // The commentors First and Last Name + Date
+            comment_el.lastElementChild.firstElementChild.innerText = `${state.user.first_name} ${state.user.last_name} - ${our_comment.created_on}`;
+
             comment_container.appendChild( comment_el );
 
 

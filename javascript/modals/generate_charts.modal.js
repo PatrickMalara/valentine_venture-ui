@@ -11,7 +11,7 @@ modals.generate_charts = {
         } else if ( screen_name === "Something else") {
 
         }
-    }
+    },
 
     init: async function() {
 
@@ -22,18 +22,21 @@ modals.generate_charts = {
         // @TODO create a chart service to avoid future issues with feathers pagination limits
         const response = await client.service("locations").find( {
             query: {
-                $select: ["main_category_id"]
+                $select: ["main_category_id"],
+                $limit: 1000 //@TODO create a new enpoint just for generating chart data
             }
         } );
 
-        const outdoors_count = response.data.filter( loc => loc.main_category_id === 1).length
-        const art_count = response.data.filter( loc => loc.main_category_id === 2).length
-        const eating_count = response.data.filter( loc => loc.main_category_id === 3).length
-        const drinking_count = response.data.filter( loc => loc.main_category_id === 4).length
-        const games_count = response.data.filter( loc => loc.main_category_id === 5).length
-        const animals_count = response.data.filter( loc => loc.main_category_id === 6).length
+        console.log("response of count", response );
 
-        const the_chart = new Chart(ctx, {
+        const outdoors_count = response.filter( loc => loc.main_category_id === 1).length
+        const art_count = response.filter( loc => loc.main_category_id === 2).length
+        const eating_count = response.filter( loc => loc.main_category_id === 3).length
+        const drinking_count = response.filter( loc => loc.main_category_id === 4).length
+        const games_count = response.filter( loc => loc.main_category_id === 5).length
+        const animals_count = response.filter( loc => loc.main_category_id === 6).length
+
+        const the_chart = new Chart(this.ctx, {
             type: 'pie',
             data: {
                 labels: ['Outdoors', 'Eating', 'Drinking', 'Games', 'Art', 'Animals'],

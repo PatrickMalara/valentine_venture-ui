@@ -249,6 +249,8 @@ async function search( event ) {
         console.log( "Attempted to Reauthenticate: Success", response );
 
         state.user = {
+            first_name: response.user.first_name,
+            last_name: response.user.last_name,
             id: response.user.id,
             email: response.user.email,
             is_admin: response.user.is_admin ? true : false

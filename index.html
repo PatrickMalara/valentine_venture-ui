@@ -32,7 +32,8 @@
           <form onsubmit="search(event)" class="search-bar">
               <div style="display: flex; width: 100%">
                   <div onclick="open_login_signup_modal(event)" style="height: 24px; background: white; border: none; margin-right: 0.5rem;" >
-                    <img src="assets/logo.png" style="height: 24px;" alt="Company Logo" />
+                      <!-- <img src="assets/logo.png" style="height: 24px;" alt="Company Logo" /> -->
+                    <i class="bi bi-list" style="color: black; font-size: 1.5rem; display: inline-block; margin-top: -4px; cursor: pointer;"> </i>
                   </div>
                   <input type="text" name="search-bar" id="search-bar" class="search-input" style="width: calc(100% - 3rem); " placeholder="Search" />
               </div>
@@ -73,8 +74,11 @@
               </div>
 
               <div class="location-content" style="padding: 0px 0.5rem;">
-                  <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                    <h3 id="location-modal-name" class="ghost-loading" style="margin: 2px;"> </h3>
+                  <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 0.5rem;">
+                    <div>
+                        <h3 id="location-modal-name" class="ghost-loading" style="margin: 2px;"> </h3>
+                        <h5 id="location-modal-address" class="ghost-loading" style="margin: 2px; color: #c5c5c5;"> </h5>
+                    </div>
 
                     <div style="text-align: right;">
                         <div>
@@ -93,10 +97,10 @@
 
                         <br>
                         <div style="white-space: nowrap;">
-                            <span style="font-size: x-small;" class="text-blue">
+                            <span style="font-size: small;" class="text-blue">
                                 <i class="bi bi-hand-thumbs-up-fill"></i> <span id="like_count">190</span>
                             </span>
-                            <span style="font-size: x-small;" class="text-orange">
+                            <span style="font-size: small;" class="text-orange">
                                 <i class="bi bi-hand-thumbs-down-fill"></i> <span id="dislike_count">13</span>
                             </span>
                         </div>
@@ -120,7 +124,7 @@
                             Wow this is a really good place
                         </p>
                         <span style="float: right;">
-                            <i style="font-size: x-small; " >Patrick Malara - 2021-10-06</i>
+                            <i style="font-size: x-small; " ></i>
                         </span>
 
                     </div>
@@ -145,12 +149,14 @@
                 <i onclick="modals.close('preferences') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <button onclick="toggle_preference('outdoors') " > Outdoors </button>
-              <button onclick="toggle_preference('eating') " > Eating </button>
-              <button onclick="toggle_preference('drinking') " > Drinking </button>
-              <button onclick="toggle_preference('art') " > Art </button>
-              <button onclick="toggle_preference('games') " > Games </button>
-              <button onclick="toggle_preference('animals') " > Animals </button>
+              <div class="preference-modal-button-container">
+                  <button onclick="toggle_preference('outdoors') " > Outdoors </button>
+                  <button onclick="toggle_preference('eating') " > Eating </button>
+                  <button onclick="toggle_preference('drinking') " > Drinking </button>
+                  <button onclick="toggle_preference('art') " > Art </button>
+                  <button onclick="toggle_preference('games') " > Games </button>
+                  <button onclick="toggle_preference('animals') " > Animals </button>
+              </div>
               
           </article>
       </div>
@@ -335,31 +341,40 @@
 
 
       <div id="login_signup" class="modal" style="display: none; filter: opacity(0%);"> 
-          <article class="modal-content" style="height: auto;">
+          <article class="modal-content" style="height: auto; background-color: var(--primary-color); color: white;">
               <div class="modal-header">
-                <h3> <i class="bi-heart-fill"></i> Login or Signup </h3>
+                 <h3> </h3> 
                 <i onclick="modals.close('login_signup') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
-              <h4> Login </h4>
-              <form onsubmit="modals.login_signup.attempt_login(event)">
-                  <label>Email</label> <br />
-                  <input type="email" id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
-                  <label>Password</label> <br />
-                  <input type="password" id="password" name="password" /> <br /> <br />
-                  <button type="submit"> Login </button>
-              </form>
+              <div style="display: flex; align-items: center; flex-direction: column;">
+                  <img src="assets/WhiteLogo.png" >
+                  <h3> Valentine Venture </h3>
 
-              <hr />
+                  <h4> Login </h4>
+                  <form onsubmit="modals.login_signup.attempt_login(event)">
+                      <label>Email</label> <br />
+                      <input class="input-text" type="email" name="email" placeholder="johnsmith@gmail.com" required /> <br /> <br />
+                      <label>Password</label> <br />
+                      <input class="input-text" type="password" name="password" required /> <br /> <br />
+                      <button type="submit"> Login </button>
+                  </form>
 
-              <h4> Signup </h4>
-              <form onsubmit="modals.login_signup.attempt_signup(event)">
-                  <label>Email</label> <br />
-                  <input type="email" id="email" name="email" placeholder="johnsmith@gmail.com" /> <br /> <br />
-                  <label>Password</label> <br />
-                  <input type="password" id="password" name="password" /> <br /> <br />
-                  <button type="submit"> Create Account </button>
-              </form>
+
+                  <h4> Signup </h4>
+                  <form onsubmit="modals.login_signup.attempt_signup(event)">
+                      <label>First Name </label> <br />
+                      <input class="input-text" type="text" name="first_name" placeholder="John" required /> <br /> <br />
+                      <label>Last Name</label> <br />
+                      <input class="input-text" type="text" name="last_name" placeholder="Smith" required /> <br /> <br />
+                      <label>Email</label> <br />
+                      <input class="input-text" type="email"  name="email" placeholder="johnsmith@gmail.com" required /> <br /> <br />
+                      <label>Password</label> <br />
+                      <input class="input-text" type="password" name="password" required /> <br /> <br />
+                      <button type="submit"> Create Account </button>
+                  </form>
+
+              </div>
               
           </article>
       </div>

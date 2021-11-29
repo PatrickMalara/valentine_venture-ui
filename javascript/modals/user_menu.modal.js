@@ -52,5 +52,19 @@ modals.user_menu = {
             user_menu_el.appendChild( suggest_location_btn );
         }
 
+        // Logout Button
+        const logout_btn = document.createElement("button");
+        logout_btn.innerText = "Logout";
+        logout_btn.addEventListener(
+            "click",
+            () => { 
+                sessionStorage.clear();
+                localStorage.clear();
+                modals.open("login_signup");
+            }
+        );
+
+        user_menu_el.appendChild( logout_btn );
+
     }
 }

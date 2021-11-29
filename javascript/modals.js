@@ -13,8 +13,16 @@ const modals = {
             if ( this.modal_elements[i].id === modal_to_open ) {
                 this.modal_elements[i].style.display = "flex";
 
-                if ( "init" in this[modal_to_open] ) {
-                    this[modal_to_open].init();
+                if ( this[modal_to_open].requires_auth === true && state.user === undefined) {
+                    notify("You must be logged in to use this feature.", "bad");
+                    modals.open("login_signup");
+                    return;
+                }
+
+                if ( "init" in this[modal_to_open]) {
+                    if ( this[modal_to_open].init() === "failed" )  {
+                        break;
+                    }
                 }
 
             } else {

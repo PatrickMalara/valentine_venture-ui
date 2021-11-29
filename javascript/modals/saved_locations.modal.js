@@ -1,4 +1,5 @@
 modals.saved_locations = {
+    requires_auth: true,
     saved_array: [],
 
     init: async function() {
