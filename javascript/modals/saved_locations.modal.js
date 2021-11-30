@@ -24,7 +24,15 @@ modals.saved_locations = {
             const length = this.saved_array.length;
             for( i = 0; i < length; i += 1 ) {
                 saved_item = saved_item.cloneNode(true);
-                saved_item.lastElementChild.innerText = this.saved_array[i].location_name
+                saved_item.firstElementChild.lastElementChild.innerText = this.saved_array[i].location_name
+
+                const location_id = this.saved_array[i].location_id;
+
+                saved_item.addEventListener( "click", (event) => {
+                    modals.location.load_location( location_id );
+                    modals.open("location") 
+                } );
+
                 ul_el.appendChild( saved_item );
             }
 

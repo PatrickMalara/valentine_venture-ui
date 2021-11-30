@@ -107,7 +107,7 @@ modals.generate_charts = {
 
             loc.addEventListener( "click", (event) => { 
                 modals.location.load_location( response.disliked[i].id );
-                modals.open("location") 
+                modals.open("location");
             } );
 
             disliked_locations.appendChild( loc );

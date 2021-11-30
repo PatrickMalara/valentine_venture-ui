@@ -28,6 +28,7 @@ html, body {
 .text-blue { color: darkcyan; }
 .text-orange { color: orange; }
 .text-red { color: indianred; }
+.text-green { color: green; }
 
 ::selection {
     color: white;
