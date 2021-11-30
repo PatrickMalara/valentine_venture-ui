@@ -201,17 +201,19 @@
       <div id="generate_charts" class="modal" style="display: none; filter: opacity(0%);"> 
           <article class="modal-content" style="height: auto;">
               <div class="modal-header">
-                  <h3> <i class="bi-pie-chart-fill"></i> Generate Charts </h3>
+                  <h3> <i class="bi-pie-chart-fill"></i> Stats </h3>
                 <i onclick="modals.close('generate_charts') " class="bi bi-x" style="cursor: pointer;"> </i>
               </div>
 
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 1rem;">
-                  <button onclick="modals.flagging.flag(1) " > Categories  </button>
-                  <button style="margin: 1rem 0rem;" onclick="modals.flagging.flag(2) " > Ratings </button>
-                  <button onclick="modals.flagging.flag(3) " > Newest Locations  </button>
+                  <button onclick="modals.generate_charts.set_screen('categories') " > Categories  </button>
+                  <button style="margin: 1rem 0rem;" onclick="modals.generate_charts.set_screen('ratings')" > Ratings </button>
+                  <button onclick="modals.generate_charts.set_screen('new')" > Newest Locations  </button>
               </div>
 
-                  <canvas id="generated_chart" style="height:50vh; width:100%;"> </canvas>
+              <div id="ratings_container"> </div>
+              <div id="new_container"> </div>
+              <canvas id="generated_chart" style="height:50vh; width:100%;"> </canvas>
 
           </article>
       </div>

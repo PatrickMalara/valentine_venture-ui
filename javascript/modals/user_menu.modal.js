@@ -24,7 +24,7 @@ modals.user_menu = {
             );
 
             const generate_charts_btn = document.createElement("button");
-            generate_charts_btn.innerText = "Generate Charts";
+            generate_charts_btn.innerText = "View Stats";
             generate_charts_btn.addEventListener(
                 "click",
                 () => { modals.open("generate_charts"); }

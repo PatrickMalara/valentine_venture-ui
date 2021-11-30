@@ -148,6 +148,34 @@ button {
     cursor: pointer;
 }
 
+.rating_location {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+
+    background-color: #f8f8f8;
+
+    margin-bottom: 0.5rem;
+    padding: 0.1rem 0.25rem;
+
+    border-radius: 6px;
+    border: 1px solid #f8f8f8;
+}
+
+.location-item {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+
+    background-color: #f8f8f8;
+
+    margin-bottom: 0.5rem;
+    padding: 0.1rem 0.25rem;
+
+    border-radius: 6px;
+    border: 1px solid #f8f8f8;
+}
+
 
 @keyframes notification-on-animation{
     0%{ filter: opacity(0%); }
