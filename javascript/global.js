@@ -1,6 +1,6 @@
 //Globals
-//const socket    = io("https://valentine-venture-server.herokuapp.com/");
-const socket    = io("http://localhost:3030");
+const socket    = io("https://valentine-venture-server.herokuapp.com/");
+//const socket    = io("http://localhost:3030");
 const client    = feathers();
 
 client.configure( feathers.socketio(socket) );
@@ -21,6 +21,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoicGF0cmlja21hbGFyYWRldmVsb3BlciIsImEiOiJja3RhdG9sNWoxcHhsMnBucmN2dDBsajh2In0.SyHhgEOXvWgrBEYCEc3uAA',
 }).addTo( the_map );
 
+// I know I'm not suppose to do this, but since this is a school project I okay with it
 const geolocoder_url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDPdS-vxRHXOrrVOVZfwEbp99pzHCmop-o";
 
 

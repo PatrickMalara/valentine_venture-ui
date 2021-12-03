@@ -4,7 +4,7 @@ modals.flagged_locations = {
         let flagged_response = undefined;
         try {
             flagged_response = await client.service("flags").find();
-            console.log( flagged_response );
+            console.log( { flagged_response } );
         } catch(error) {
             console.error( error );
             return;
@@ -19,6 +19,8 @@ modals.flagged_locations = {
                     }
                 }
             } );
+
+            console.log( { locations_response } );
         } catch(error) {
             console.error( error );
             return;
@@ -36,10 +38,10 @@ modals.flagged_locations = {
         }
 
         let i = 0;
-        const length = locations_response.data.length;
+        const length = locations_response.length;
         for( i = 0; i < length; i += 1 ) {
             flagged_item = flagged_item.cloneNode(true);
-            flagged_item.lastElementChild.innerText = locations_response.data[i].name;
+            flagged_item.lastElementChild.innerText = locations_response[i].name;
             flagged_container.appendChild( flagged_item );
         }
 

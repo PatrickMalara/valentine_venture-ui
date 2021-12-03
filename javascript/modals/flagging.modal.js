@@ -12,8 +12,11 @@ modals.flagging = {
         try {
            await client.service("flags").create( flag_data );
 
+            notify("Location Flagged", "good");
             modals.close("flagging");
+
         } catch(error) {
+            notify("Failed to Flag Location", "bad");
             console.error("Error flagging the location", error);
         }
     },
